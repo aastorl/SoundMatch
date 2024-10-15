@@ -36,23 +36,90 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        // To enable the use of java.time api's with minSdk < 26
+        // coreLibraryDesugaringEnabled true
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
+     // buildConfig true
+    }
+    composeOptions {
+       // kotlinCompilerExtensionVersion ('1.4.3')
+    }
+    packagingOptions {
+        resources {
+           // excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+    testOptions {
+        unitTests {
+          //  includeAndroidResources = true
+        }
     }
 }
 
 dependencies {
-
+    // core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    // Java.time support for api < 26
+    // coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+    // Compose
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
+    // Navigation
+    implementation (libs.androidx.navigation.compose)
+    //accompanist
+    implementation (libs.accompanist.placeholder.material)
+    // image handling
+    implementation (libs.coil.compose)
+    // lottie compose
+    implementation (libs.lottie.compose)
+    // testing
+    testImplementation (libs.junit)
+    androidTestImplementation (libs.androidx.junit.v121)
+    androidTestImplementation(libs.androidx.espresso.core.v361)
+    //noinspection GradleDependency
+    // androidTestImplementation ("androidx.compose.ui:ui-test-junit4:$compose_version")
+    testImplementation (libs.robolectric)
+    testImplementation (libs.kotlinx.coroutines.test)
+    testImplementation (libs.mockito.core)
+    testImplementation (libs.mockito.kotlin)
+
+    // retrofit
+    implementation (libs.retrofit)
+    implementation (libs.converter.jackson)
+    // Jackson support for kotlin types
+    implementation (libs.jackson.module.kotlin)
+
+    // hilt
+    implementation (libs.hilt.android)
+    implementation (libs.androidx.hilt.navigation.compose)
+    // kapt (libs.hilt.compiler)
+
+    //exoplayer
+    implementation (libs.google.exoplayer.core)
+    // for PlayerNotificationManager
+    implementation (libs.google.exoplayer.ui)
+
+    // paging
+    implementation (libs.androidx.paging.runtime)
+    implementation (libs.androidx.paging.compose)
+
+    // color extraction
+    implementation (libs.androidx.palette.ktx)
+
+    // mdc components for view
+    // This dependency is not needed once the min lines param
+    // for Text composable becomes available in compose
+    // This parameter is needed in the home screen
+    implementation (libs.material)
+
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
