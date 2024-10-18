@@ -46,10 +46,10 @@ android {
     }
     buildFeatures {
         compose = true
-     // buildConfig true
+        buildConfig = true
     }
     composeOptions {
-       // kotlinCompilerExtensionVersion ('1.4.3')
+        // kotlinCompilerExtensionVersion ("1.4.3")
     }
     packagingOptions {
         resources {
@@ -68,7 +68,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     // Java.time support for api < 26
-    // coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.1.5'
+    // coreLibraryDesugaring (libs.desugar.jdk.libs)
     // Compose
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))

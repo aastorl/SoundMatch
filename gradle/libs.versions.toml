@@ -5,6 +5,7 @@ androidxJunit = "1.2.1"
 androidxPaletteKtx = "1.0.0"
 coilCompose = "2.4.0"
 converterJackson = "2.9.0"
+desugar_jdk_libs = "2.1.2"
 espressoCoreVersion = "3.6.1"
 exoplayerUiVersion = "2.19.1"
 hiltAndroid = "2.48"
@@ -40,6 +41,7 @@ androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.r
 androidx-palette-ktx = { module = "androidx.palette:palette-ktx", version.ref = "androidxPaletteKtx" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 converter-jackson = { module = "com.squareup.retrofit2:converter-jackson", version.ref = "converterJackson" }
+desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugar_jdk_libs" }
 google-exoplayer-core = { module = "com.google.android.exoplayer:exoplayer-core", version.ref = "exoplayerUiVersion" }
 google-exoplayer-ui = { module = "com.google.android.exoplayer:exoplayer-ui", version.ref = "exoplayerUiVersion" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
