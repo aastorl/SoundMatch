@@ -88,7 +88,7 @@ sealed class SearchResult {
  * A utility method used to get a string that contains date and duration
  * information in a formatted manner for an instance of
  * [SearchResult.EpisodeSearchResult].
- * @see generateMusifyDateAndDurationString
+ * @see generateSoundMatchDateAndDurationString
  */
 fun SearchResult.EpisodeSearchResult.getFormattedDateAndDurationString(context: Context): String =
     generateSoundMatchDateAndDurationString(

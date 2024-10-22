@@ -9,7 +9,7 @@ import android.app.appsearch.SearchResult
  * carousel card.
  */
 
-data class HomeFeedCarousel(
+data class HomeFeedCarouselCardInfo(
     val id: String,
     val imageUrlString: String,
     val caption: String,

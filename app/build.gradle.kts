@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
+
 }
 
 android {
@@ -10,14 +13,14 @@ android {
 
     defaultConfig {
         applicationId = "com.example.soundmatch"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
-           // useSupportLibrary true
+            useSupportLibrary = true
         }
         // load fields from local.properties file
         // Properties properties = new Properties()
@@ -53,7 +56,7 @@ android {
     }
     packagingOptions {
         resources {
-           // excludes += '/META-INF/{AL2.0,LGPL2.1}'
+           excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
     testOptions {
@@ -68,7 +71,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     // Java.time support for api < 26
-    // coreLibraryDesugaring (libs.desugar.jdk.libs)
+    coreLibraryDesugaring (libs.desugar.jdk.libs)
     // Compose
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -100,7 +103,8 @@ dependencies {
     // hilt
     implementation (libs.hilt.android)
     implementation (libs.androidx.hilt.navigation.compose)
-    // kapt (libs.hilt.compiler)
+    implementation (libs.hilt.compiler)
+
 
     //exoplayer
     implementation (libs.google.exoplayer.core)

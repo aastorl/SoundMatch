@@ -1,8 +1,14 @@
 package com.example.soundmatch.domain
 
+import com.example.soundmatch.data.remote.musicservice.SupportedSpotifyGenres
 
+/**
+ * A class that models a specific genre.
+ * @param id unique id of the genre
+ * @param label the label associated with the genre
+ */
 data class Genre(
-    val id: Int,
+    val id: String,
     val label: String,
     val genreType: GenreType
 ) {
@@ -20,11 +26,12 @@ data class Genre(
         SLEEP
     }
 }
+
 /**
  * A mapper function used to map an enum of type [Genre.GenreType] to
  * the corresponding enum of type [SupportedSpotifyGenres].
  */
-fun Genre.GenreType.toSupportedSpotifyGenreType() = when(this) {
+fun Genre.GenreType.toSupportedSpotifyGenreType() = when (this) {
     Genre.GenreType.AMBIENT -> SupportedSpotifyGenres.AMBIENT
     Genre.GenreType.CHILL -> SupportedSpotifyGenres.CHILL
     Genre.GenreType.CLASSICAL -> SupportedSpotifyGenres.CLASSICAL

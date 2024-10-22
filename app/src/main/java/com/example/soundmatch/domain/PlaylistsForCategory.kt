@@ -1,6 +1,7 @@
 package com.example.soundmatch.domain
 
 import android.app.appsearch.SearchResult
+import com.example.soundmatch.domain.SearchResult.PlaylistSearchResult
 
 /**
  * A domain class that contains a list of [associatedPlaylists] fir a specific
