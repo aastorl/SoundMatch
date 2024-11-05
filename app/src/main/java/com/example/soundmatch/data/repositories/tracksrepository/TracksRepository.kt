@@ -1,6 +1,7 @@
 package com.example.soundmatch.data.repositories.tracksrepository
 
 import androidx.paging.PagingData
+import com.example.soundmatch.data.utils.FetchedResource
 import com.example.soundmatch.domain.Genre
 import com.example.soundmatch.domain.SearchResult
 import com.example.soundmatch.domain.SoundMatchErrorType

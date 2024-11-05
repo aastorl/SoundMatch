@@ -15,7 +15,7 @@ import com.example.soundmatch.domain.SoundMatchErrorType
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class MusifyAlbumsRepository @Inject constructor(
+class SoundMatchAlbumsRepository @Inject constructor(
     private val tokenRepository: TokenRepository,
     private val spotifyService: SpotifyService,
     private val pagingConfig: PagingConfig

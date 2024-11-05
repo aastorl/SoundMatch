@@ -3,12 +3,21 @@ package com.example.soundmatch.data.repositories.tracksrepository
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.example.soundmatch.data.paging.PlaylistTracksPagingSource
 import com.example.soundmatch.data.remote.musicservice.SpotifyService
+import com.example.soundmatch.data.remote.response.getTracks
+import com.example.soundmatch.data.remote.response.toTrackSearchResult
 import com.example.soundmatch.data.repositories.tokenrepository.TokenRepository
+import com.example.soundmatch.data.repositories.tokenrepository.runCatchingWithToken
+import com.example.soundmatch.data.utils.FetchedResource
+import com.example.soundmatch.domain.Genre
+import com.example.soundmatch.domain.SearchResult
+import com.example.soundmatch.domain.SoundMatchErrorType
+import com.example.soundmatch.domain.toSupportedSpotifyGenreType
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class MusifyTracksRepository @Inject constructor(
+class SoundMatchTracksRepository @Inject constructor(
     private val tokenRepository: TokenRepository,
     private val spotifyService: SpotifyService,
     private val pagingConfig: PagingConfig
@@ -16,7 +25,7 @@ class MusifyTracksRepository @Inject constructor(
     override suspend fun fetchTopTenTracksForArtistWithId(
         artistId: String,
         countryCode: String
-    ): FetchedResource<List<SearchResult.TrackSearchResult>, MusifyErrorType> =
+    ): FetchedResource<List<SearchResult.TrackSearchResult>, SoundMatchErrorType> =
         tokenRepository.runCatchingWithToken {
             spotifyService.getTopTenTracksForArtistWithId(
                 artistId = artistId,
@@ -30,7 +39,7 @@ class MusifyTracksRepository @Inject constructor(
     override suspend fun fetchTracksForGenre(
         genre: Genre,
         countryCode: String
-    ): FetchedResource<List<SearchResult.TrackSearchResult>, MusifyErrorType> =
+    ): FetchedResource<List<SearchResult.TrackSearchResult>, SoundMatchErrorType> =
         tokenRepository.runCatchingWithToken {
             spotifyService.getTracksForGenre(
                 genre = genre.genreType.toSupportedSpotifyGenreType(),
@@ -44,7 +53,7 @@ class MusifyTracksRepository @Inject constructor(
     override suspend fun fetchTracksForAlbumWithId(
         albumId: String,
         countryCode: String
-    ): FetchedResource<List<SearchResult.TrackSearchResult>, MusifyErrorType> =
+    ): FetchedResource<List<SearchResult.TrackSearchResult>, SoundMatchErrorType> =
         tokenRepository.runCatchingWithToken {
             spotifyService.getAlbumWithId(albumId, countryCode, it).getTracks()
         }
