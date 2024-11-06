@@ -13,7 +13,7 @@ data class HomeFeedCarouselCardInfo(
     val id: String,
     val imageUrlString: String,
     val caption: String,
-    val associatedSearchResult: SearchResult?
+    val associatedSearchResult: com.example.soundmatch.domain.SearchResult?
 )
 /**
  * A domain class that contain the [title] and [associatedCards]
