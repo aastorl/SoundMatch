@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.example.soundmatch.data.repositories.searchrepository.SearchRepository
 import com.example.soundmatch.data.repositories.tracksrepository.TracksRepository
 import com.example.soundmatch.domain.SearchResult
 import com.example.soundmatch.usecases.getCurrentlyPlayingTrackUseCase.GetCurrentlyPlayingTrackUseCase
