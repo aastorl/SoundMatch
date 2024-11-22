@@ -41,7 +41,7 @@ object SoundMatchBottomNavigationConstants {
  * @see [com.example.soundmatch.ui.navigation.SoundMatchBottomNavigationConnectedWithBackStack]
  */
 @Composable
-fun MusifyBottomNavigation(
+fun SoundMatchBottomNavigation(
     navigationItems: List<SoundMatchBottomNavigationDestinations>,
     currentlySelectedItem: SoundMatchBottomNavigationDestinations,
     onItemClick: (SoundMatchBottomNavigationDestinations) -> Unit,
