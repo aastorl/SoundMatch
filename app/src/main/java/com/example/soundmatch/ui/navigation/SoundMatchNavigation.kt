@@ -15,6 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.soundmatch.domain.HomeFeedCarouselCardInfo
 import com.example.soundmatch.domain.HomeFeedFilters
 import com.example.soundmatch.domain.SearchResult
 import com.example.soundmatch.domain.Streamable

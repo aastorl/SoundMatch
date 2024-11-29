@@ -1,6 +1,7 @@
 package com.example.soundmatch.data.paging
 
 import com.example.soundmatch.data.remote.musicservice.SpotifyService
+import com.example.soundmatch.data.remote.response.toPodcastEpisode
 import com.example.soundmatch.data.repositories.tokenrepository.TokenRepository
 import com.example.soundmatch.domain.PodcastEpisode
 import retrofit2.HttpException

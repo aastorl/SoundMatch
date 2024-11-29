@@ -3,6 +3,7 @@ package com.example.soundmatch.data.repositories.tokenrepository
 import com.example.soundmatch.data.remote.token.BearerToken
 import com.example.soundmatch.data.utils.FetchedResource
 import com.example.soundmatch.domain.SoundMatchErrorType
+import com.example.soundmatch.domain.getAssociatedSoundMatchErrorType
 import com.fasterxml.jackson.core.JacksonException
 import retrofit2.HttpException
 import java.io.IOException

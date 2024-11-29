@@ -1,11 +1,11 @@
 package com.example.soundmatch.domain
 
 import android.content.Context
+import com.example.soundmatch.utils.generateSoundMatchDateAndDurationString
 
 /**
  * A domain class that represents a specific podcast episode.
  */
-
 data class PodcastEpisode(
     val id: String,
     val title: String,
@@ -19,10 +19,11 @@ data class PodcastEpisode(
 ) : Streamable {
     override val streamInfo = StreamInfo(
         streamUrl = previewUrl,
-        imageUrls = podcastShowInfo.imageUrl,
+        imageUrl = podcastShowInfo.imageUrl,
         title = title,
         subtitle = podcastShowInfo.name
     )
+
     /**
      * A domain class that contains the associated podcast show information of a
      * [PodcastEpisode].
@@ -32,6 +33,7 @@ data class PodcastEpisode(
         val name: String,
         val imageUrl: String
     )
+
     /**
      * A domain class that contains the date information of a [PodcastEpisode].
      */
@@ -42,12 +44,13 @@ data class PodcastEpisode(
      */
     data class DurationInfo(val hours: Int, val minutes: Int)
 }
+
 /**
  * A utility method used to get a string that contains date and duration
  * information in a formatted manner.
  * @see generateSoundMatchDateAndDurationString
  */
-fun PodcastEpisode.getFormattedDateAndDurationString(context: Context) : String =
+fun PodcastEpisode.getFormattedDateAndDurationString(context: Context): String =
     generateSoundMatchDateAndDurationString(
         context = context,
         month = releaseDateInfo.month,
@@ -56,6 +59,7 @@ fun PodcastEpisode.getFormattedDateAndDurationString(context: Context) : String 
         hours = durationInfo.hours,
         minutes = durationInfo.minutes
     )
+
 /**
  * A method used to check whether two instances of [PodcastEpisode]'s are equal,
  * ignoring the [PodcastEpisode.PodcastShowInfo.imageUrl].

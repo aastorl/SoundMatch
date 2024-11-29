@@ -1,6 +1,7 @@
 package com.example.soundmatch.domain
 
 import android.content.Context
+import com.example.soundmatch.utils.generateSoundMatchDateAndDurationString
 
 sealed class SearchResult {
     /**

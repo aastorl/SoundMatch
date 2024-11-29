@@ -3,6 +3,7 @@ package com.example.soundmatch.di
 import com.example.soundmatch.data.remote.musicservice.SpotifyBaseUrls
 import com.example.soundmatch.data.remote.musicservice.SpotifyService
 import com.example.soundmatch.data.remote.token.tokenmanager.TokenManager
+import com.example.soundmatch.utils.defaultSoundMatchJacksonConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

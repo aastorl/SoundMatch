@@ -1,5 +1,7 @@
 package com.example.soundmatch.di
 
+import com.example.soundmatch.musicplayer.MusicPlayerV2
+import com.example.soundmatch.musicplayer.SoundMatchBackgroundMusicPlayerV2
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -20,5 +22,5 @@ abstract class MusicPlayerModule {
     @Singleton
     abstract fun bindMusicPlayerV2(
         SoundMatchBackgroundMusicPlayerV2: SoundMatchBackgroundMusicPlayerV2
-    ): MusicPlayer2
+    ): MusicPlayerV2
 }

@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -36,6 +37,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.soundmatch.ui.navigation.SoundMatchBottomNavigationConnectedWithBackStack
 import com.example.soundmatch.ui.navigation.SoundMatchBottomNavigationDestinations
 import com.example.soundmatch.ui.navigation.SoundMatchNavigation
+import com.example.soundmatch.ui.screens.homescreen.ExpandableMiniPlayerWithSnackbar
 import com.example.soundmatch.ui.theme.SoundMatchTheme
 import com.example.soundmatch.viewmodels.PlaybackViewModel
 import dagger.hilt.android.AndroidEntryPoint

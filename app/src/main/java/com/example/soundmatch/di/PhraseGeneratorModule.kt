@@ -1,5 +1,7 @@
 package com.example.soundmatch.di
 
+import com.example.soundmatch.viewmodels.homefeedviewmodel.greetingphrasegenerator.CurrentTimeBasedGreetingPhraseGenerator
+import com.example.soundmatch.viewmodels.homefeedviewmodel.greetingphrasegenerator.GreetingPhraseGenerator
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -78,7 +78,7 @@ sealed class SoundMatchNavigationDestinations(val route: String) {
         }
     }
 
-    object HomeScreen : MusifyNavigationDestinations("SoundMatchNavigationDestinations.HomeScreen")
+    object HomeScreen : SoundMatchNavigationDestinations("SoundMatchNavigationDestinations.HomeScreen")
 
     object PodcastEpisodeDetailScreen :
         SoundMatchNavigationDestinations(
@@ -89,7 +89,7 @@ sealed class SoundMatchNavigationDestinations(val route: String) {
             "SoundMatchNavigationDestinations.PodcastEpisodeDetailScreen/$episodeId"
     }
 
-    object PodcastShowDetailScreen : MusifyNavigationDestinations(
+    object PodcastShowDetailScreen : SoundMatchNavigationDestinations(
         route = "SoundMatchNavigationDestinations.PodcastShowDetailScreen/{showId}"
     ) {
         const val NAV_ARG_PODCAST_SHOW_ID = "showId"

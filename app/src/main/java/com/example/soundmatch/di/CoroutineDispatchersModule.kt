@@ -1,13 +1,9 @@
 package com.example.soundmatch.di
 
-import com.example.musify.di.IODispatcher
-import com.example.musify.di.MainDispatcher
-import com.fasterxml.jackson.databind.annotation.JsonAppend
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
-import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Qualifier
