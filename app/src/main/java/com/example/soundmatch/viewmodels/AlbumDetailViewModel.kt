@@ -7,7 +7,9 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.example.soundmatch.data.repositories.tracksrepository.TracksRepository
+import com.example.soundmatch.data.utils.FetchedResource
 import com.example.soundmatch.domain.SearchResult
+import com.example.soundmatch.ui.navigation.SoundMatchNavigationDestinations
 import com.example.soundmatch.usecases.getCurrentlyPlayingTrackUseCase.GetCurrentlyPlayingTrackUseCase
 import com.example.soundmatch.usecases.getPlaybackLoadingStatusUseCase.GetPlaybackLoadingStatusUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,7 +38,7 @@ class AlbumDetailViewModel @Inject constructor(
     val uiState = _uiState as State<AlbumDetailUiState>
 
     private val albumId =
-        savedStateHandle.get<String>(SoundMatchNavigationsDestinations.AlbumDetailScreen.NAV_ARG_ALBUM_ID) !!
+        savedStateHandle.get<String>(SoundMatchNavigationDestinations.AlbumDetailScreen.NAV_ARG_ALBUM_ID) !!
     val currentlyPlayingTrack = getCurrentlyPlayingTrackUseCase.currentlyPlayingTrackStream
 
     init {

@@ -1,32 +1,34 @@
 [versions]
 accompanistPlaceholderMaterial = "0.13.0"
-agp = "8.7.2"
+agp = "8.7.3"
 androidxJunit = "1.2.1"
+androidxPagingCompose = "3.3.5"
 androidxPaletteKtx = "1.0.0"
 coilCompose = "2.4.0"
 converterJackson = "2.9.0"
-desugar_jdk_libs = "2.1.2"
+desugar_jdk_libs = "2.1.4"
 espressoCoreVersion = "3.6.1"
 exoplayerUiVersion = "2.19.1"
-hiltAndroid = "2.48"
+hiltAndroid = "2.49"
 hiltCompiler = "2.44"
 hiltNavigationCompose = "1.2.0"
 jacksonModuleKotlin = "2.13.2"
 kotlin = "2.0.0"
-coreKtx = "1.13.1"
+coreKtx = "1.15.0"
 junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
 kotlinxCoroutinesTest = "1.6.4"
-lifecycleRuntimeKtx = "2.8.6"
-activityCompose = "1.9.2"
-composeBom = "2024.04.01"
+lifecycleRuntimeKtx = "2.8.7"
+activityCompose = "1.9.3"
+composeBom = "2024.12.01"
 lottieCompose = "6.1.0"
 material = "1.12.0"
 mockitoCore = "3.9.0"
 mockitoKotlin = "3.2.0"
-navigationCompose = "2.8.2"
-pagingRuntime = "3.3.2"
+navigationCompose = "2.8.5"
+pagingCompose = "3.3.5"
+pagingRuntime = "3.3.5"
 robolectric = "4.8.1"
 
 [libraries]
@@ -36,7 +38,8 @@ androidx-espresso-core-v361 = { module = "androidx.test.espresso:espresso-core",
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-junit-v121 = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingRuntime" }
+androidx-paging-compose-v320alpha01 = { module = "androidx.paging:paging-compose", version.ref = "pagingCompose" }
+androidx-paging-compose-v332 = { module = "androidx.paging:paging-compose", version.ref = "androidxPagingCompose" }
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
 androidx-palette-ktx = { module = "androidx.palette:palette-ktx", version.ref = "androidxPaletteKtx" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }

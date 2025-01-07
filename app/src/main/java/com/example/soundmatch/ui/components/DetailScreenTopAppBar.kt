@@ -1,25 +1,16 @@
 package com.example.soundmatch.ui.components
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.TopAppBar
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.DynamicBackgroundResource
-import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.DynamicBackgroundStyle
-import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.dynamicBackground
 import com.example.soundmatch.ui.theme.SoundMatchTheme
 
 /**
@@ -36,6 +27,7 @@ import com.example.soundmatch.ui.theme.SoundMatchTheme
  * @param dynamicBackgroundResource the resource from which the background
  * color would be extracted from. By default, it is set to [DynamicBackgroundResource.Empty].
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreenTopAppBar(
     title: String,
@@ -44,44 +36,42 @@ fun DetailScreenTopAppBar(
     onClick: () -> Unit = {},
     dynamicBackgroundResource: DynamicBackgroundResource = DynamicBackgroundResource.Empty
 ) {
-    val dynamicBackgroundStyle = remember {
-        DynamicBackgroundStyle.Filled(scrimColor = Color.Black.copy(alpha = 0.3f))
-    }
+    val backgroundColor = Color.Transparent // Adjust this if you have a dynamic color for the background.
 
-    // Since the top app bar's background color is transparent,
-    // any elevation to the app bar would make it look like it has
-    // a border. Therefore, set the elevation to 0dp.
+    // TopAppBar from Material 3
     TopAppBar(
-        modifier = Modifier
-            .dynamicBackground(dynamicBackgroundResource, dynamicBackgroundStyle)
-            .then(modifier)
+        modifier = modifier
             .clickable(onClick = onClick),
-        backgroundColor = Color.Transparent,
-        elevation = 0.dp
-    ) {
-        IconButton(
-            modifier = Modifier
-                .clip(CircleShape)
-                .align(Alignment.CenterVertically)
-                .offset(y = 1.dp),
-            onClick = onBackButtonClicked
-        ) {
-            Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_chevron_left_24),
-                contentDescription = null,
-                tint = Color.White
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = backgroundColor,
+            scrolledContainerColor = backgroundColor
+        ),
+        actions = {
+            // Add any action icons if needed.
+        },
+        navigationIcon = {
+            IconButton(
+                onClick = onBackButtonClicked
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_baseline_chevron_left_24),
+                    contentDescription = "Back",
+                    tint = Color.White
+                )
+            }
+        },
+        title = {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.SemiBold
+                ),
+                color = Color.White,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
-        Text(
-            modifier = Modifier.align(Alignment.CenterVertically),
-            text = title,
-            style = MaterialTheme.typography.body1,
-            fontWeight = FontWeight.SemiBold,
-            color = Color.White,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-    }
+    )
 }
 
 @Preview

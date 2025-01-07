@@ -27,7 +27,7 @@ import com.example.soundmatch.ui.components.AsyncImageWithPlaceholder
 fun StreamableEpisodeCard(
     episode: PodcastEpisode,
     isEpisodePlaying: Boolean,
-    isCardHighlighted:Boolean,
+    isCardHighlighted: Boolean,
     onPlayButtonClicked: () -> Unit,
     onPauseButtonClicked: () -> Unit,
     onClicked: () -> Unit,
@@ -51,7 +51,7 @@ fun StreamableEpisodeCard(
 @Composable
 fun StreamableEpisodeCard(
     isEpisodePlaying: Boolean,
-    isCardHighlighted:Boolean,
+    isCardHighlighted: Boolean,
     onPlayButtonClicked: () -> Unit,
     onPauseButtonClicked: () -> Unit,
     onClicked: () -> Unit,
@@ -67,7 +67,7 @@ fun StreamableEpisodeCard(
         modifier = Modifier
             .fillMaxWidth()
             .then(modifier),
-        elevation = 0.dp,
+        elevation = CardDefaults.cardElevation(0.dp),
         shape = RectangleShape,
         onClick = onClicked
     ) {
@@ -95,19 +95,18 @@ fun StreamableEpisodeCard(
                     onImageLoading = { isThumbnailLoading = true })
                 Text(
                     text = title,
-                    style = MaterialTheme.typography.subtitle2,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    color = if (isCardHighlighted) MaterialTheme.colors.primary
-                    else Color.Unspecified
+                    color = if (isCardHighlighted) MaterialTheme.colorScheme.primary
+                    else MaterialTheme.colorScheme.onBackground
                 )
-
             }
             Text(
                 text = description,
-                style = MaterialTheme.typography.caption.copy(
-                    Color.White.copy(alpha = ContentAlpha.medium)
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
                 ),
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 2,
@@ -115,17 +114,14 @@ fun StreamableEpisodeCard(
             )
             Text(
                 text = dateAndDurationString,
-                style = MaterialTheme
-                    .typography
-                    .caption
-                    .copy(Color.White.copy(alpha = ContentAlpha.medium)),
+                style = MaterialTheme.typography.bodySmall.copy(
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
+                ),
                 fontWeight = FontWeight.SemiBold,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
-            // The footer composables shouldn't be affected by the parent's Arrangement.spacedBy().
-            // Therefore, wrap them into another column so that the parent column sees these
-            // composables as a single composable.
+            // Footer composables are wrapped in a column to avoid being affected by Arrangement.spacedBy().
             Column {
                 ActionsRow(
                     isEpisodePlaying = isEpisodePlaying,
@@ -165,25 +161,29 @@ private fun ActionsRow(
             IconButton(onClick = onAddToLibraryButtonClicked) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_add_circle_outline_24),
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
             }
             IconButton(onClick = onDownloadButtonClicked) {
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_outline_download_for_offline_24),
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
             }
             IconButton(onClick = onShareButtonClick) {
                 Icon(
                     imageVector = Icons.Outlined.Share,
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
             }
             IconButton(onClick = onMoreInfoButtonClick) {
                 Icon(
                     imageVector = Icons.Outlined.MoreVert,
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
             }
         }
@@ -195,7 +195,7 @@ private fun ActionsRow(
         ) {
             Icon(
                 modifier = Modifier.size(40.dp),
-                tint = Color.White,
+                tint = MaterialTheme.colorScheme.onBackground,
                 imageVector = ImageVector
                     .vectorResource(
                         if (isEpisodePlaying) R.drawable.ic_pause_circle_filled_24

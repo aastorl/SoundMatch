@@ -1,9 +1,24 @@
 package com.example.soundmatch.ui.components
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.IconButton
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import java.lang.reflect.Modifier
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+
 
 /**
  * A sealed class hierarchy that contains the different header image
@@ -13,6 +28,7 @@ sealed class HeaderImageSource {
     data class ImageFromUrlString(val urlString: String) : HeaderImageSource()
     data class ImageFromDrawableResource(@DrawableRes val resourceId: Int) : HeaderImageSource()
 }
+
 
 /**
  * A composable that is used to display an image together with it's
@@ -55,10 +71,12 @@ fun ImageHeaderWithMetadata(
             onClick = onBackButtonClicked
         ) {
             Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_chevron_left_24),
-                contentDescription = null
+                imageVector = Icons.AutoMirrored.Filled.ArrowBack, // New version from arrowBack
+                contentDescription = "Back",
+                tint = MaterialTheme.colorScheme.onBackground
             )
         }
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -73,7 +91,7 @@ fun ImageHeaderWithMetadata(
                         modifier = Modifier
                             .size(250.dp)
                             .align(Alignment.CenterHorizontally)
-                            .shadow(8.dp),
+                            .shadow(8.dp, RoundedCornerShape(8.dp)),
                         model = headerImageSource.urlString,
                         contentDescription = null,
                         isLoadingPlaceholderVisible = isLoadingPlaceholderVisible,
@@ -88,7 +106,7 @@ fun ImageHeaderWithMetadata(
                         modifier = Modifier
                             .size(250.dp)
                             .align(Alignment.CenterHorizontally)
-                            .shadow(8.dp),
+                            .shadow(8.dp, RoundedCornerShape(8.dp)),
                         contentScale = ContentScale.Crop,
                         contentDescription = null,
                     )
@@ -96,16 +114,25 @@ fun ImageHeaderWithMetadata(
             }
 
             Spacer(modifier = Modifier.size(16.dp))
+
             Text(
                 text = title,
                 fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.h5
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.Bold
+                ),
+                color = MaterialTheme.colorScheme.onBackground
             )
+
             Text(
                 text = subtitle,
                 fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.subtitle1
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    fontWeight = FontWeight.Bold
+                ),
+                color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f)
             )
+
             additionalMetadataContent()
         }
     }

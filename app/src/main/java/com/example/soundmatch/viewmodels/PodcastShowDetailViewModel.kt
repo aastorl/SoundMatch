@@ -8,8 +8,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.example.soundmatch.data.repositories.podcastsrepository.PodcastsRepository
+import com.example.soundmatch.data.utils.FetchedResource
 import com.example.soundmatch.domain.PodcastEpisode
 import com.example.soundmatch.domain.PodcastShow
+import com.example.soundmatch.ui.navigation.SoundMatchNavigationDestinations
 import com.example.soundmatch.usecases.getCurrentlyPlayingEpisodePlaybackStateUseCase.GetCurrentlyPlayingEpisodePlaybackStateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -50,26 +52,30 @@ class PodcastShowDetailViewModel @Inject constructor(
         fetchShowUpdatingUiState()
         getCurrentlyPlayingEpisodePlaybackStateUseCase
             .currentlyPlayingEpisodePlaybackStateStream
-            .onEach {
-                when (it) {
-                    is UseCasePlaybackState.Ended -> {
+            .onEach { playbackState ->
+                when (playbackState) {
+                    is GetCurrentlyPlayingEpisodePlaybackStateUseCase.PlaybackState.Ended -> {
                         isCurrentlyPlayingEpisodePaused = null
                         currentlyPlayingEpisode = null
                     }
-                    is UseCasePlaybackState.Loading -> uiState = UiState.PLAYBACK_LOADING
-                    is UseCasePlaybackState.Paused ->{
-                        currentlyPlayingEpisode = it.pausedEpisode
+                    is GetCurrentlyPlayingEpisodePlaybackStateUseCase.PlaybackState.Loading -> {
+                        uiState = UiState.PLAYBACK_LOADING
+                    }
+                    is GetCurrentlyPlayingEpisodePlaybackStateUseCase.PlaybackState.Paused -> {
+                        currentlyPlayingEpisode = playbackState.pausedEpisode
                         isCurrentlyPlayingEpisodePaused = true
                     }
-                    is UseCasePlaybackState.Playing -> {
+                    is GetCurrentlyPlayingEpisodePlaybackStateUseCase.PlaybackState.Playing -> {
                         if (uiState != UiState.IDLE) uiState = UiState.IDLE
                         if (isCurrentlyPlayingEpisodePaused == null || isCurrentlyPlayingEpisodePaused == true) {
                             isCurrentlyPlayingEpisodePaused = false
                         }
-                        currentlyPlayingEpisode = it.playingEpisode
+                        currentlyPlayingEpisode = playbackState.playingEpisode
                     }
+                    else -> Unit
                 }
-            }.launchIn(viewModelScope)
+            }
+            .launchIn(viewModelScope)
     }
 
     fun retryFetchingShow() {
@@ -91,5 +97,4 @@ class PodcastShowDetailViewModel @Inject constructor(
             }
         }
     }
-
 }

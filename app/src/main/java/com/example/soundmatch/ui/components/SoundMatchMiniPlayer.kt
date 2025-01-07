@@ -27,6 +27,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.soundmatch.domain.Streamable
+import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.DynamicBackgroundResource
+import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.DynamicBackgroundStyle
+import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.dynamicBackground
 
 /**
  * An object that contains constants related to the [MusifyMiniPlayer]
@@ -93,12 +96,12 @@ fun SoundMatchMiniPlayer(
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
-                style = MaterialTheme.typography.subtitle2
+                style = MaterialTheme.typography.titleSmall
             )
             Text(
                 text = streamable.streamInfo.subtitle,
                 fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.caption.copy(
+                style = MaterialTheme.typography.bodySmall.copy(
                     color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
                 ),
                 overflow = TextOverflow.Ellipsis,

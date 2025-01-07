@@ -31,6 +31,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.example.soundmatch.domain.SearchResult
+import com.example.soundmatch.ui.components.AsyncImageWithPlaceholder
+import com.example.soundmatch.ui.components.DefaultSoundMatchLoadingAnimation
+import com.example.soundmatch.ui.components.DetailScreenTopAppBar
+import com.example.soundmatch.ui.components.ListItemCardType
+import com.example.soundmatch.ui.components.SoundMatchBottomNavigationConstants
+import com.example.soundmatch.ui.components.SoundMatchCompactListItemCard
+import com.example.soundmatch.ui.components.SoundMatchCompactTrackCard
+import com.example.soundmatch.ui.components.SoundMatchMiniPlayerConstants
+import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.DynamicBackgroundResource
 import kotlinx.coroutines.launch
 
 @Composable
@@ -105,7 +114,7 @@ fun ArtistDetailScreen(
                     SoundMatchCompactTrackCard(
                         track = track,
                         subtitleTextStyle = MaterialTheme.typography
-                            .caption
+                            .bodySmall
                             .copy(color = subtitleTextColorWithAlpha),
                         onClick = onTrackClicked,
                         isLoadingPlaceholderVisible = false,
@@ -121,10 +130,11 @@ fun ArtistDetailScreen(
                     text = "Releases"
                 )
             }
-            itemsIndexed(
-                items = releases,
-                key = { index, album -> "$index$album" }
-            ) { _, album ->
+            items(
+                count = releases.itemCount,
+                key = { index -> releases.peek(index)?.id ?: index } // Ajusta `id` según tu modelo.
+            ) { index ->
+                val album = releases[index] // Accede al elemento directamente por índice.
                 album?.let {
                     SoundMatchCompactListItemCard(
                         modifier = Modifier
@@ -133,11 +143,11 @@ fun ArtistDetailScreen(
                         cardType = ListItemCardType.ALBUM,
                         thumbnailImageUrlString = it.albumArtUrlString,
                         title = it.name,
-                        titleTextStyle = MaterialTheme.typography.h6,
+                        titleTextStyle = MaterialTheme.typography.titleLarge,
                         subtitle = it.yearOfReleaseString,
-                        subtitleTextStyle = MaterialTheme.typography
-                            .subtitle2
-                            .copy(color = subtitleTextColorWithAlpha),
+                        subtitleTextStyle = MaterialTheme.typography.titleSmall.copy(
+                            color = subtitleTextColorWithAlpha
+                        ),
                         onClick = { onAlbumClicked(it) },
                         onTrailingButtonIconClick = { onAlbumClicked(it) }
                     )
@@ -156,7 +166,7 @@ fun ArtistDetailScreen(
                     ) {
                         Text(
                             text = "Oops! Something doesn't look right",
-                            style = MaterialTheme.typography.h6,
+                            style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.SemiBold
                         )
                         Text(

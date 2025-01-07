@@ -12,12 +12,12 @@ plugins {
 
 android {
     namespace = "com.example.soundmatch"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.soundmatch"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -116,7 +116,7 @@ dependencies {
 
     // paging
     implementation (libs.androidx.paging.runtime)
-    implementation (libs.androidx.paging.compose)
+    implementation(libs.androidx.paging.compose.v320alpha01)
 
     // color extraction
     implementation (libs.androidx.palette.ktx)

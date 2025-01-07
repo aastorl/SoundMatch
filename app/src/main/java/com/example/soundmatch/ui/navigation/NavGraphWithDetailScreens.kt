@@ -18,14 +18,24 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.soundmatch.domain.PodcastEpisode
 import com.example.soundmatch.domain.SearchResult
 import com.example.soundmatch.domain.Streamable
+import com.example.soundmatch.ui.components.DefaultSoundMatchErrorMessage
+import com.example.soundmatch.ui.components.DefaultSoundMatchLoadingAnimation
+import com.example.soundmatch.ui.navigation.SoundMatchNavigationDestinations.AlbumDetailScreen
 import com.example.soundmatch.ui.navigation.SoundMatchNavigationDestinations.ArtistDetailScreen
+import com.example.soundmatch.ui.navigation.SoundMatchNavigationDestinations.PodcastEpisodeDetailScreen
+import com.example.soundmatch.ui.screens.detailscreens.AlbumDetailScreen
 import com.example.soundmatch.ui.screens.detailscreens.ArtistDetailScreen
 import com.example.soundmatch.ui.screens.detailscreens.PlaylistDetailScreen
+import com.example.soundmatch.ui.screens.detailscreens.PodcastEpisodeDetailScreen
+import com.example.soundmatch.ui.screens.podcastshowdetailscreen.PodcastShowDetailScreen
 import com.example.soundmatch.viewmodels.AlbumDetailUiState
 import com.example.soundmatch.viewmodels.AlbumDetailViewModel
 import com.example.soundmatch.viewmodels.PlaylistDetailViewModel
+import com.example.soundmatch.viewmodels.PodcastEpisodeDetailViewModel
+import com.example.soundmatch.viewmodels.PodcastShowDetailViewModel
 import com.example.soundmatch.viewmodels.artistviewmodel.ArtistDetailScreenUiState
 import com.example.soundmatch.viewmodels.artistviewmodel.ArtistDetailViewModel
 import java.net.URLDecoder
@@ -121,7 +131,6 @@ fun NavGraphBuilder.navGraphWithDetailScreens(
     }
 }
 
-@ExperimentalMaterialApi
 private fun NavGraphBuilder.artistDetailScreen(
     route: String,
     onBackButtonClicked: () -> Unit,
@@ -281,7 +290,7 @@ class NavGraphWithDetailScreensNestedController(
     private val playTrack: (SearchResult.TrackSearchResult) -> Unit
 ) {
     fun navigateToDetailScreen(podcastEpisode: PodcastEpisode) {
-        val route = MusifyNavigationDestinations
+        val route = SoundMatchNavigationDestinations
             .PodcastShowDetailScreen
             .buildRoute(podcastEpisode.podcastShowInfo.id)
         navController.navigate(associatedNavGraphRoute + route) { launchSingleTop = true }
@@ -289,15 +298,15 @@ class NavGraphWithDetailScreensNestedController(
 
     fun navigateToDetailScreen(searchResult: SearchResult) {
         val route = when (searchResult) {
-            is SearchResult.AlbumSearchResult -> MusifyNavigationDestinations
+            is SearchResult.AlbumSearchResult -> SoundMatchNavigationDestinations
                 .AlbumDetailScreen
                 .buildRoute(searchResult)
 
-            is SearchResult.ArtistSearchResult -> MusifyNavigationDestinations
+            is SearchResult.ArtistSearchResult -> SoundMatchNavigationDestinations
                 .ArtistDetailScreen
                 .buildRoute(searchResult)
 
-            is SearchResult.PlaylistSearchResult -> MusifyNavigationDestinations
+            is SearchResult.PlaylistSearchResult -> SoundMatchNavigationDestinations
                 .PlaylistDetailScreen
                 .buildRoute(searchResult)
 
@@ -306,10 +315,10 @@ class NavGraphWithDetailScreensNestedController(
                 return
             }
             is SearchResult.PodcastSearchResult -> {
-                MusifyNavigationDestinations.PodcastShowDetailScreen.buildRoute(searchResult.id)
+                SoundMatchNavigationDestinations.PodcastShowDetailScreen.buildRoute(searchResult.id)
             }
             is SearchResult.EpisodeSearchResult -> {
-                MusifyNavigationDestinations.PodcastEpisodeDetailScreen.buildRoute(searchResult.id)
+                SoundMatchNavigationDestinations.PodcastEpisodeDetailScreen.buildRoute(searchResult.id)
             }
         }
         navController.navigate(associatedNavGraphRoute + route)
@@ -331,13 +340,13 @@ private fun NavGraphBuilder.podcastEpisodeDetailScreen(
         if (viewModel.podcastEpisode == null) {
             Box(modifier = Modifier.fillMaxSize()) {
                 if (uiState == PodcastEpisodeDetailViewModel.UiSate.LOADING) {
-                    DefaultMusifyLoadingAnimation(
+                    DefaultSoundMatchLoadingAnimation(
                         modifier = Modifier.align(Alignment.Center),
                         isVisible = true
                     )
                 }
                 if (uiState == PodcastEpisodeDetailViewModel.UiSate.ERROR) {
-                    DefaultMusifyErrorMessage(
+                    DefaultSoundMatchErrorMessage(
                         modifier = Modifier.align(Alignment.Center),
                         title = "Oops! Something doesn't look right",
                         subtitle = "Please check the internet connection",
@@ -366,7 +375,7 @@ private fun NavGraphBuilder.podcastEpisodeDetailScreen(
     }
 }
 
-@ExperimentalMaterialApi
+
 private fun NavGraphBuilder.podcastShowDetailScreen(
     route: String,
     onEpisodePlayButtonClicked: (PodcastEpisode) -> Unit,
@@ -381,13 +390,13 @@ private fun NavGraphBuilder.podcastShowDetailScreen(
         if (viewModel.podcastShow == null) {
             Box(modifier = Modifier.fillMaxSize()) {
                 if (uiState == PodcastShowDetailViewModel.UiState.LOADING) {
-                    DefaultMusifyLoadingAnimation(
+                    DefaultSoundMatchLoadingAnimation(
                         modifier = Modifier.align(Alignment.Center),
                         isVisible = true
                     )
                 }
                 if (uiState == PodcastShowDetailViewModel.UiState.ERROR) {
-                    DefaultMusifyErrorMessage(
+                    DefaultSoundMatchErrorMessage(
                         modifier = Modifier.align(Alignment.Center),
                         title = "Oops! Something doesn't look right",
                         subtitle = "Please check the internet connection",
@@ -415,5 +424,5 @@ private fun NavGraphBuilder.podcastShowDetailScreen(
  * A utility function that appends the [routeOfNavGraph] to [MusifyNavigationDestinations.route]
  * as prefix. See docs of [NavGraphWithDetailScreensNestedController] for more information.
  */
-private fun MusifyNavigationDestinations.prefixedWithRouteOfNavGraphRoute(routeOfNavGraph: String) =
+private fun SoundMatchNavigationDestinations.prefixedWithRouteOfNavGraphRoute(routeOfNavGraph: String) =
     routeOfNavGraph + this.route

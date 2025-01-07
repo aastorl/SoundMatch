@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +17,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.example.soundmatch.domain.SearchResult
+import com.example.soundmatch.ui.components.DefaultSoundMatchErrorMessage
+import com.example.soundmatch.ui.components.EpisodeListCard
+import com.example.soundmatch.ui.components.ListItemCardType
+import com.example.soundmatch.ui.components.PodcastCard
+import com.example.soundmatch.ui.components.SoundMatchCompactListItemCard
+import com.example.soundmatch.ui.components.SoundMatchCompactTrackCard
+import com.example.soundmatch.ui.components.SoundMatchCompactTrackCardDefaults
+import com.example.soundmatch.utils.itemsSafe
 
 /**
  * A color that is meant to be applied to all types of search items.
@@ -30,7 +37,6 @@ import com.example.soundmatch.domain.SearchResult
 private val CardBackgroundColor @Composable get() = Color.Transparent
 private val CardShape = RectangleShape
 
-@ExperimentalMaterialApi
 fun LazyListScope.searchTrackListItems(
     tracksListForSearchQuery: LazyPagingItems<SearchResult.TrackSearchResult>,
     currentlyPlayingTrack: SearchResult.TrackSearchResult?,
@@ -59,7 +65,7 @@ fun LazyListScope.searchTrackListItems(
     }
 }
 
-@ExperimentalMaterialApi
+
 fun LazyListScope.searchAlbumListItems(
     albumListForSearchQuery: LazyPagingItems<SearchResult.AlbumSearchResult>,
     onItemClick: (SearchResult) -> Unit,
@@ -94,7 +100,6 @@ fun LazyListScope.searchAlbumListItems(
     }
 }
 
-@ExperimentalMaterialApi
 fun LazyListScope.searchArtistListItems(
     artistListForSearchQuery: LazyPagingItems<SearchResult.ArtistSearchResult>,
     onItemClick: (SearchResult) -> Unit,
@@ -130,7 +135,6 @@ fun LazyListScope.searchArtistListItems(
     }
 }
 
-@ExperimentalMaterialApi
 fun LazyListScope.searchPlaylistListItems(
     playlistListForSearchQuery: LazyPagingItems<SearchResult.PlaylistSearchResult>,
     onItemClick: (SearchResult) -> Unit,
@@ -166,7 +170,6 @@ fun LazyListScope.searchPlaylistListItems(
     }
 }
 
-@ExperimentalMaterialApi
 fun LazyListScope.searchPodcastListItems(
     podcastsForSearchQuery: LazyPagingItems<SearchResult.PodcastSearchResult>,
     episodesForSearchQuery: LazyPagingItems<SearchResult.EpisodeSearchResult>,
@@ -181,7 +184,7 @@ fun LazyListScope.searchPodcastListItems(
             ),
             text = "Podcasts & Shows",
             fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.h6
+            style = MaterialTheme.typography.titleLarge
         )
         LazyRow(
             modifier = Modifier
@@ -190,15 +193,13 @@ fun LazyListScope.searchPodcastListItems(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             contentPadding = PaddingValues(horizontal = 16.dp)
         ) {
-            items(podcastsForSearchQuery) { podcast ->
-                podcast?.let {
-                    PodcastCard(
-                        podcastArtUrlString = it.imageUrlString,
-                        name = it.name,
-                        nameOfPublisher = it.nameOfPublisher,
-                        onClick = { onPodcastItemClicked(it) }
-                    )
-                }
+            itemsSafe(podcastsForSearchQuery) { podcast ->
+                PodcastCard(
+                    podcastArtUrlString = podcast.imageUrlString,
+                    name = podcast.name,
+                    nameOfPublisher = podcast.nameOfPublisher,
+                    onClick = { onPodcastItemClicked(podcast) }
+                )
             }
         }
     }
@@ -239,11 +240,18 @@ private fun <T : Any> LazyListScope.itemsIndexedWithEmptyListContent(
                 .windowInsetsPadding(WindowInsets.ime)
         )
     },
-    itemContent: @Composable LazyItemScope.(index: Int, value: T?) -> Unit
+    itemContent: @Composable LazyItemScope.(index: Int, value: T) -> Unit
 ) {
     if (items.loadState.append.endOfPaginationReached && items.itemCount == 0) {
         item { emptyListContent.invoke(this) }
     } else {
-        itemsIndexed(items, key, itemContent)
+        items.itemCount.let { count ->
+            items(count) { index ->
+                items[index]?.let {
+                    itemContent(index, it)
+                }
+            }
+        }
     }
 }
+

@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -25,6 +26,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.soundmatch.domain.SearchResult
+import com.example.soundmatch.ui.components.DefaultSoundMatchLoadingAnimation
+import com.example.soundmatch.ui.components.DetailScreenTopAppBar
+import com.example.soundmatch.ui.components.HeaderImageSource
+import com.example.soundmatch.ui.components.ImageHeaderWithMetadata
+import com.example.soundmatch.ui.components.SoundMatchBottomNavigationConstants
+import com.example.soundmatch.ui.components.SoundMatchCompactTrackCard
+import com.example.soundmatch.ui.components.SoundMatchMiniPlayerConstants
+import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.DynamicBackgroundResource
+import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.dynamicBackground
 import kotlinx.coroutines.launch
 
 @Composable
@@ -89,12 +99,12 @@ fun AlbumDetailScreen(
                     }
                 }
             } else {
-                items(trackList) {
+                items(trackList) { track ->
                     SoundMatchCompactTrackCard(
-                        track = it,
+                        track = track,
                         onClick = onTrackItemClick,
                         isLoadingPlaceholderVisible = false,
-                        isCurrentlyPlaying = it == currentlyPlayingTrack,
+                        isCurrentlyPlaying = currentlyPlayingTrack?.let { it == track } ?: false,
                         isAlbumArtVisible = false,
                         subtitleTextStyle = LocalTextStyle.current.copy(
                             fontWeight = FontWeight.Thin,

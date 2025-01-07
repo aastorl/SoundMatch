@@ -16,7 +16,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.example.soundmatch.domain.SearchResult
-
+import com.example.soundmatch.ui.components.DefaultSoundMatchLoadingAnimation
+import com.example.soundmatch.ui.components.DetailScreenTopAppBar
+import com.example.soundmatch.ui.components.HeaderImageSource
+import com.example.soundmatch.ui.components.ImageHeaderWithMetadata
+import com.example.soundmatch.ui.components.SoundMatchBottomNavigationConstants
+import com.example.soundmatch.ui.components.SoundMatchCompactTrackCard
+import com.example.soundmatch.ui.components.SoundMatchMiniPlayerConstants
+import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.DynamicBackgroundResource
+import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.dynamicBackground
 import kotlinx.coroutines.launch
 
 @Composable
@@ -41,7 +49,6 @@ fun PlaylistDetailScreen(
     val dynamicBackgroundResource = remember {
         if (playlistImageUrlString == null) DynamicBackgroundResource.Empty
         else DynamicBackgroundResource.FromImageUrl(playlistImageUrlString)
-
     }
     val coroutineScope = rememberCoroutineScope()
 
@@ -53,6 +60,7 @@ fun PlaylistDetailScreen(
             ),
             state = lazyListState
         ) {
+            // Header with image and metadata
             headerWithImageItem(
                 dynamicBackgroundResource = dynamicBackgroundResource,
                 playlistName = playlistName,
@@ -65,6 +73,8 @@ fun PlaylistDetailScreen(
                 onImageLoaded = { isLoadingPlaceholderForAlbumArtVisible = false },
                 onBackButtonClicked = onBackButtonClicked
             )
+
+            // Error message
             if (isErrorMessageVisible) {
                 item {
                     Column(
@@ -85,8 +95,10 @@ fun PlaylistDetailScreen(
                     }
                 }
             } else {
-                items(tracks) {
-                    it?.let {
+                // Tracks content
+                items(count = tracks.itemCount) { index ->
+                    val track = tracks[index]
+                    track?.let {
                         SoundMatchCompactTrackCard(
                             track = it,
                             onClick = onTrackClicked,
@@ -102,6 +114,8 @@ fun PlaylistDetailScreen(
                     }
                 }
             }
+
+            // Bottom Spacer
             item {
                 Spacer(
                     modifier = Modifier
@@ -110,10 +124,14 @@ fun PlaylistDetailScreen(
                 )
             }
         }
+
+        // Loading animation
         DefaultSoundMatchLoadingAnimation(
             modifier = Modifier.align(Alignment.Center),
             isVisible = isLoading
         )
+
+        // App Bar visibility animation
         AnimatedVisibility(
             visible = isAppBarVisible,
             enter = fadeIn(),
@@ -171,3 +189,4 @@ private fun LazyListScope.headerWithImageItem(
         }
     }
 }
+

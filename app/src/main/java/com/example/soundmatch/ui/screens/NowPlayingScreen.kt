@@ -20,6 +20,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.example.soundmatch.domain.Streamable
+import com.example.soundmatch.ui.components.AsyncImageWithPlaceholder
+import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.DynamicBackgroundResource
+import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.dynamicBackground
 import kotlinx.coroutines.flow.Flow
 
 // collecting the flow within the composable scopes the collector to the composable.
@@ -81,13 +84,13 @@ fun NowPlayingScreen(
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
-                style = MaterialTheme.typography.h6
+                style = MaterialTheme.typography.titleLarge
             )
             Text(
                 text = streamable.streamInfo.subtitle,
                 fontWeight = FontWeight.SemiBold,
-                style = MaterialTheme.typography.subtitle1.copy(
-                    color = MaterialTheme.colors.onBackground.copy(alpha = ContentAlpha.medium)
+                style = MaterialTheme.typography.titleMedium.copy(
+                    color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6f)
                 ),
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1
@@ -140,7 +143,7 @@ private fun Header(
             content = { Icon(painter = expandMoreIcon, contentDescription = null) })
         Text(
             text = "Now playing",
-            style = MaterialTheme.typography.subtitle1,
+            style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold
         )
         IconButton(modifier = Modifier.offset(x = (16).dp), // accommodate for increased size of icon because of touch target sizing
@@ -246,10 +249,10 @@ private fun ProgressSliderWithTimeText(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = timeElapsedString, style = MaterialTheme.typography.caption
+                text = timeElapsedString, style = MaterialTheme.typography.bodySmall
             )
             Text(
-                text = totalDurationOfTrack, style = MaterialTheme.typography.caption
+                text = totalDurationOfTrack, style = MaterialTheme.typography.bodySmall
             )
         }
     }

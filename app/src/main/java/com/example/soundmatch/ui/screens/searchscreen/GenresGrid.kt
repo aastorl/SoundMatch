@@ -42,7 +42,7 @@ fun GenresGrid(
             Text(
                 text = "Genres",
                 fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.subtitle1
+                style = MaterialTheme.typography.titleMedium
             )
         }
         items(items = availableGenres) {

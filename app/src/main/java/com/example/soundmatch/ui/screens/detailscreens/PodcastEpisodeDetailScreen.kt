@@ -9,14 +9,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Share
+import androidx.compose.material3.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SegmentedButtonDefaults.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -34,8 +33,13 @@ import androidx.compose.ui.unit.sp
 import androidx.core.text.HtmlCompat
 import com.example.soundmatch.domain.PodcastEpisode
 import com.example.soundmatch.domain.getFormattedDateAndDurationString
+import com.example.soundmatch.ui.components.AsyncImageWithPlaceholder
 import com.example.soundmatch.ui.components.DefaultSoundMatchLoadingAnimation
+import com.example.soundmatch.ui.components.DetailScreenTopAppBar
 import com.example.soundmatch.ui.components.HtmlTextView
+import com.example.soundmatch.ui.components.SoundMatchBottomNavigationConstants
+import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.DynamicBackgroundResource
+import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.dynamicBackground
 import com.google.android.material.R
 import kotlinx.coroutines.launch
 
@@ -57,9 +61,6 @@ fun PodcastEpisodeDetailScreen(
     val isTopAppBarVisible by remember {
         derivedStateOf {
             if (lazyListState.firstVisibleItemIndex != 0) return@derivedStateOf true
-            // The first item in the list is the header with the image of the show.
-            // If the first item (item at index 0) is offset by more than 200dp
-            // display the app bar.
             lazyListState.firstVisibleItemScrollOffset > 200
         }
     }
@@ -82,9 +83,6 @@ fun PodcastEpisodeDetailScreen(
                 )
             }
             item {
-                // The episode header has a background gradient that needs to
-                // be edge-to-edge. Therefore, use a separate column to add
-                // horizontal padding to the rest of the content.
                 Spacer(Modifier.height(16.dp))
                 PodcastEpisodeScreenContent(
                     isEpisodePlaying = isEpisodeCurrentlyPlaying,
@@ -147,12 +145,10 @@ private fun PodcastEpisodeScreenContent(
             onAddButtonClicked = onAddButtonClicked,
             onDownloadButtonClicked = onDownloadButtonClicked,
         )
-        // make text expandable once support for spanned
-        //  text is made available for compose.
         HtmlTextView(
             text = htmlDescription,
-            textAppearanceResId = materialR.style.TextAppearance_MaterialComponents_Subtitle2,
-            color = Color.White.copy(alpha = ContentAlpha.medium)
+            color = Color.White.copy(alpha = 0.6f), // ContentAlpha.medium in Material 3
+            // textAppearanceResId = materialR.style.TextAppearance_MaterialComponents_Subtitle2,
         )
         Row(
             modifier = Modifier
@@ -197,8 +193,6 @@ private fun PodcastEpisodeHeader(
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         IconButton(
-            // add offset to accommodate for the touch target sizing
-            // applied to the icon button
             modifier = Modifier.offset(x = (-16).dp), onClick = onBackButtonClicked
         ) {
             Icon(
@@ -228,19 +222,18 @@ private fun PodcastEpisodeHeader(
             fontSize = 32.sp,
             fontWeight = FontWeight.Bold
         )
-        // using a column to prevent the text being spaced by 16dp (set by the parent column)
         Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
             Text(
                 modifier = Modifier.clickable { onPodcastShowTitleClicked() },
                 text = podcastName,
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
                 color = Color.White,
                 fontWeight = FontWeight.Bold
             )
             Text(
                 text = dateAndDurationString,
-                style = MaterialTheme.typography.caption,
-                color = Color.White.copy(alpha = ContentAlpha.medium)
+                style = MaterialTheme.typography.bodySmall,
+                color = Color.White.copy(alpha = 0.6f)
             )
             Spacer(modifier = Modifier.size(8.dp))
         }
@@ -263,7 +256,7 @@ fun ActionsRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Button(
-            modifier = Modifier.width(width = 120.dp),
+            modifier = Modifier.width(120.dp),
             onClick = {
                 if (isPlaying) onPauseButtonClicked()
                 else onPlayButtonClicked()
@@ -276,14 +269,8 @@ fun ActionsRow(
                 fontWeight = FontWeight.SemiBold
             )
         }
-        // Use a separate row to group the secondary action buttons. The primary
-        // action button is the play button. This will make the parent row collectively
-        // consider the secondary action buttons as a single row composable. This
-        // ensures that the "SpaceBetween" arrangement (applied by the parent row)
-        // creates space between the play button and the secondary action buttons
-        // and not between all the buttons including the secondary action buttons.
         Row(verticalAlignment = Alignment.CenterVertically) {
-            val iconTintColor = Color.White.copy(alpha = ContentAlpha.medium)
+            val iconTintColor = Color.White.copy(alpha = 0.6f)
             IconButton(onClick = onShareButtonClicked) {
                 Icon(
                     imageVector = Icons.Outlined.Share,
@@ -308,3 +295,4 @@ fun ActionsRow(
         }
     }
 }
+

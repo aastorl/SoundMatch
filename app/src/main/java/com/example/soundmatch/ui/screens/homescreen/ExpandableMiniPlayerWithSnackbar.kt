@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.soundmatch.domain.Streamable
+import com.example.soundmatch.ui.components.SoundMatchMiniPlayer
 import com.example.soundmatch.ui.screens.NowPlayingScreen
 import com.example.soundmatch.viewmodels.PlaybackViewModel
 import kotlinx.coroutines.flow.Flow

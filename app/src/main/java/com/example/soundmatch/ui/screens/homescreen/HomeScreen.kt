@@ -7,25 +7,33 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.soundmatch.domain.HomeFeedCarousel
 import com.example.soundmatch.domain.HomeFeedCarouselCardInfo
 import com.example.soundmatch.domain.HomeFeedFilters
+import com.example.soundmatch.ui.components.DefaultSoundMatchErrorMessage
+import com.example.soundmatch.ui.components.DefaultSoundMatchLoadingAnimation
+import com.example.soundmatch.ui.components.HomeFeedCard
+import com.example.soundmatch.ui.components.SoundMatchBottomNavigationConstants
+import com.example.soundmatch.ui.components.SoundMatchFilterChip
+import com.example.soundmatch.ui.components.SoundMatchMiniPlayerConstants
 
-@ExperimentalFoundationApi
-@ExperimentalMaterialApi
+/**
+ * A home screen composable that shows time-based greeting, home feed filters,
+ * and carousels. It also handles loading and error states.
+ */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     timeBasedGreeting: String,
@@ -38,11 +46,11 @@ fun HomeScreen(
     isLoading: Boolean,
     isErrorMessageVisible: Boolean,
 ) {
-    val lazyColumState = rememberLazyListState()
-    val isStatusbarSpacerVisible = remember {
-        derivedStateOf { lazyColumState.firstVisibleItemIndex > 1 }
+    val lazyColumnState = rememberLazyListState()
+    val isStatusBarSpacerVisible = remember {
+        derivedStateOf { lazyColumnState.firstVisibleItemIndex > 1 }
     }
-    val lazyColumBottomPaddingValues = remember {
+    val lazyColumnBottomPaddingValues = remember {
         SoundMatchBottomNavigationConstants.navigationHeight + SoundMatchMiniPlayerConstants.miniPlayerHeight
     }
     val errorMessageItem = @Composable { modifier: Modifier ->
@@ -60,9 +68,9 @@ fun HomeScreen(
     }
     Box {
         LazyColumn(
-            state = lazyColumState,
+            state = lazyColumnState,
             modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(bottom = lazyColumBottomPaddingValues)
+            contentPadding = PaddingValues(bottom = lazyColumnBottomPaddingValues)
         ) {
             item {
                 HeaderRow(
@@ -74,17 +82,17 @@ fun HomeScreen(
                 )
             }
             stickyHeader {
-                if (isStatusbarSpacerVisible.value) {
+                if (isStatusBarSpacerVisible.value) {
                     Spacer(
                         modifier = Modifier
-                            .background(MaterialTheme.colors.background)
+                            .background(MaterialTheme.colorScheme.background)
                             .fillMaxWidth()
                             .windowInsetsTopHeight(WindowInsets.statusBars)
                     )
                 }
                 Row(
                     modifier = Modifier
-                        .background(MaterialTheme.colors.background)
+                        .background(MaterialTheme.colorScheme.background)
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -103,7 +111,7 @@ fun HomeScreen(
                     errorMessageItem(
                         Modifier
                             .fillParentMaxSize()
-                            .padding(bottom = lazyColumBottomPaddingValues)
+                            .padding(bottom = lazyColumnBottomPaddingValues)
                     )
                 }
             } else {
@@ -112,7 +120,7 @@ fun HomeScreen(
                         modifier = Modifier.padding(16.dp),
                         text = carousel.title,
                         fontWeight = FontWeight.Bold,
-                        style = MaterialTheme.typography.h5
+                        style = MaterialTheme.typography.titleLarge
                     )
                     CarouselLazyRow(
                         modifier = Modifier.fillMaxWidth(),
@@ -161,7 +169,7 @@ private fun HeaderRow(modifier: Modifier = Modifier, timeBasedGreeting: String) 
         Text(
             text = timeBasedGreeting,
             fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.h5
+            style = MaterialTheme.typography.titleLarge
         )
 
         Row {
@@ -173,7 +181,7 @@ private fun HeaderRow(modifier: Modifier = Modifier, timeBasedGreeting: String) 
             }
             IconButton(onClick = {}) {
                 Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_listening_history),
+                    painter = painterResource(id = R.drawable.ic_listening_history),
                     contentDescription = null
                 )
             }

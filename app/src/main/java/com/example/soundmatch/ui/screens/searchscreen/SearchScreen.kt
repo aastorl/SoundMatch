@@ -39,6 +39,11 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.example.soundmatch.domain.Genre
 import com.example.soundmatch.domain.SearchResult
+import com.example.soundmatch.ui.components.DefaultSoundMatchErrorMessage
+import com.example.soundmatch.ui.components.DefaultSoundMatchLoadingAnimation
+import com.example.soundmatch.ui.components.SoundMatchBottomNavigationConstants
+import com.example.soundmatch.ui.components.SoundMatchFilterChip
+import com.example.soundmatch.ui.components.SoundMatchMiniPlayerConstants
 import com.example.soundmatch.viewmodels.searchviewmodel.SearchFilter
 import kotlinx.coroutines.launch
 
@@ -109,7 +114,7 @@ fun SearchScreen(
     Column(modifier = Modifier.fillMaxWidth()) {
         SearchBarWithFilterChips(
             modifier = Modifier
-                .background(MaterialTheme.colors.background.copy(alpha = searchBarAlpha))
+                .background(MaterialTheme.colorScheme.background.copy(alpha = searchBarAlpha))
                 .statusBarsPadding()
                 .padding(top = 16.dp),
             isFilterChipGroupVisible = isFilterChipGroupVisible,
@@ -161,7 +166,7 @@ fun SearchScreen(
                 )
                 false -> GenresGrid(
                     modifier = Modifier
-                        .background(MaterialTheme.colors.background)
+                        .background(MaterialTheme.colorScheme.background)
                         .padding(top = 16.dp),
                     availableGenres = genreList,
                     onGenreItemClick = onGenreItemClick
@@ -204,7 +209,7 @@ private fun SearchQueryList(
         } else {
             LazyColumn(
                 modifier = Modifier
-                    .background(MaterialTheme.colors.background.copy(alpha = 0.7f))
+                    .background(MaterialTheme.colorScheme.background.copy(alpha = 0.7f))
                     .fillMaxSize(),
                 state = lazyListState,
                 contentPadding = PaddingValues(
@@ -338,7 +343,7 @@ private fun SearchBarWithFilterChips(
             modifier = Modifier.padding(horizontal = 16.dp),
             text = "Search",
             fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.h5
+            style = MaterialTheme.typography.headlineSmall
         )
         OutlinedTextField(
             modifier = Modifier
@@ -360,12 +365,9 @@ private fun SearchBarWithFilterChips(
             value = searchText,
             onValueChange = onSearchTextChanged,
             textStyle = LocalTextStyle.current.copy(fontWeight = FontWeight.SemiBold),
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.White,
-                leadingIconColor = Color.Black,
-                trailingIconColor = Color.Black,
-                placeholderColor = Color.Black,
-                textColor = Color.Black
+            colors = TextFieldDefaults.colors(
+                // Default
+                // Change if necessary
             ),
             keyboardActions = KeyboardActions(onDone = onImeDoneButtonClicked)
         )

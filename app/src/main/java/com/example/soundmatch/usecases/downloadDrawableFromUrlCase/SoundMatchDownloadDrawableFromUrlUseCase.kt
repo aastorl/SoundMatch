@@ -7,6 +7,7 @@ import coil.request.CachePolicy
 import coil.request.ErrorResult
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import com.example.soundmatch.di.IODispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

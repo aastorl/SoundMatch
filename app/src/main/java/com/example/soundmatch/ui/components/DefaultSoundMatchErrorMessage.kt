@@ -62,7 +62,7 @@ fun DefaultSoundMatchErrorMessage(
  * A composable that is used to display an error message through-out
  * the app with the specified [title] and [subtitle]. It manages the
  * styling of the both the [title] and [subtitle]. This composable
- * is an overload of [DefaultMusifyErrorMessage] that also displays
+ * is an overload of [DefaultSoundMatchErrorMessage] that also displays
  * a retry button.
  * @param modifier the modifier to be applied to the composable.
  * @param onRetryButtonClicked the lambda to execute when the retry

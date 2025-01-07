@@ -1,20 +1,16 @@
 package com.example.soundmatch.ui.components
-
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectableGroup
-import androidx.compose.material3.Surface
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.soundmatch.ui.navigation.SoundMatchBottomNavigationDestinations
 
 /**
  * An object that contains constants related to the [SoundMatchBottomNavigation]
@@ -38,7 +34,6 @@ object SoundMatchBottomNavigationConstants {
  * as a parameter to the lambda.
  * @param modifier the modifier to be applied to the navigation bar. The height of the
  * composable is fixed at 80dp.
- * @see [com.example.soundmatch.ui.navigation.SoundMatchBottomNavigationConnectedWithBackStack]
  */
 @Composable
 fun SoundMatchBottomNavigation(
@@ -62,15 +57,12 @@ fun SoundMatchBottomNavigation(
         )
     }
 
-    // use surface because the default height of bottom navigation
-    // according to the material spec is lower than the height
-    // used by spotify for it's navigation bar
+    // Surface with gradient background and elevation 0.dp
     Surface(
-        modifier = Modifier
-            .background(gradientBrush)
-            .then(modifier),
+        modifier = modifier
+            .background(gradientBrush),
         color = Color.Transparent,
-        elevation = 0.dp
+        shadowElevation = 0.dp
     ) {
         Row(
             Modifier
@@ -79,14 +71,15 @@ fun SoundMatchBottomNavigation(
                 .selectableGroup(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            // Loop over navigationItems and render NavigationBarItem for each
             navigationItems.forEach {
-                BottomNavigationItem(
+                NavigationBarItem(
                     selected = it == currentlySelectedItem,
                     onClick = { onItemClick(it) },
                     icon = {
                         Icon(
-                            imageVector = ImageVector.vectorResource(
-                                if (it == currentlySelectedItem) it.filledIconVariantResourceId
+                            painter = painterResource(
+                                id = if (it == currentlySelectedItem) it.filledIconVariantResourceId
                                 else it.outlinedIconVariantResourceId
                             ),
                             contentDescription = null

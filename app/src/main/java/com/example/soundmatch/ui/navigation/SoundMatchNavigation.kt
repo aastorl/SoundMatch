@@ -3,7 +3,6 @@ package com.example.soundmatch.ui.navigation
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -19,6 +18,7 @@ import com.example.soundmatch.domain.HomeFeedCarouselCardInfo
 import com.example.soundmatch.domain.HomeFeedFilters
 import com.example.soundmatch.domain.SearchResult
 import com.example.soundmatch.domain.Streamable
+import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.DynamicBackgroundResource
 import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.dynamicBackground
 import com.example.soundmatch.ui.screens.GetPremiumScreen
 import com.example.soundmatch.ui.screens.homescreen.HomeScreen
@@ -45,7 +45,7 @@ fun SoundMatchNavigation(
     ) {
         navGraphWithDetailScreens(
             navGraphRoute = SoundMatchBottomNavigationDestinations.Home.route,
-            startDestination = SoundMatchBottomNavigationDestinations.HomeScreen.route,
+            startDestination = SoundMatchNavigationDestinations.HomeScreen.route,
             navController = navController,
             playStreamable = playStreamable,
             onPausePlayback = onPausePlayback

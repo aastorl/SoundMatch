@@ -1,10 +1,6 @@
 package com.example.soundmatch.ui.navigation
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
@@ -35,14 +31,14 @@ fun SoundMatchBottomNavigationConnectedWithBackStack(
         derivedStateOf {
             // if the most recent backstack entry is null or it's route
             // doesn't match with any of the routes defined in
-            // MusifyBottomNavigationDestinations sealed classes, then
+            // SoundMatchBottomNavigationDestinations sealed classes, then
             // use the previously found valid bottom navigation destination
             // as the currently selected item.
             // If it does match one of the routes defined by one of the classes that
-            // is a child of MusifyBottomNavigationDestinations sealed class,
+            // is a child of SoundMatchBottomNavigationDestinations sealed class,
             // then store it in a variable and update the state.
             // Essentially, it is picking the most recent valid route that
-            // matches the route of a class that is a child of MusifyBottomNavigationDestinations
+            // matches the route of a class that is a child of SoundMatchBottomNavigationDestinations
             // sealed class.
             currentBackStackEntry?.let {
                 val route = if (it.isInNestedNavGraph) it.destination.parent?.route

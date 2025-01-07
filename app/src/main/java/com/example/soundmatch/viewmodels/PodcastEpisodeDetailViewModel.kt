@@ -12,6 +12,7 @@ import com.example.soundmatch.data.repositories.podcastsrepository.PodcastsRepos
 import com.example.soundmatch.data.utils.FetchedResource
 import com.example.soundmatch.domain.PodcastEpisode
 import com.example.soundmatch.domain.equalsIgnoringImageSize
+import com.example.soundmatch.ui.navigation.SoundMatchNavigationDestinations
 import com.example.soundmatch.usecases.getCurrentlyPlayingEpisodePlaybackStateUseCase.GetCurrentlyPlayingEpisodePlaybackStateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -47,17 +48,14 @@ class PodcastEpisodeDetailViewModel @Inject constructor(
             .currentlyPlayingEpisodePlaybackStateStream
             .onEach {
                 when (it) {
-                    is UseCasePlaybackState.Paused,
-                    is UseCasePlaybackState.Ended -> currentlyPlayingEpisode = null
-                    is UseCasePlaybackState.Loading -> uiState = UiSate.PLAYBACK_LOADING
-                    is UseCasePlaybackState.Playing -> {
+                    is GetCurrentlyPlayingEpisodePlaybackStateUseCase.PlaybackState.Paused,
+                    is GetCurrentlyPlayingEpisodePlaybackStateUseCase.PlaybackState.Ended -> currentlyPlayingEpisode = null
+                    is GetCurrentlyPlayingEpisodePlaybackStateUseCase.PlaybackState.Loading -> uiState = UiSate.PLAYBACK_LOADING
+                    is GetCurrentlyPlayingEpisodePlaybackStateUseCase.PlaybackState.Playing -> {
                         if (uiState != UiSate.IDLE) uiState = UiSate.IDLE
-                        // Initially this.podcastEpisode might be null when the
-                        // flow sends it's first emission. This makes it impossible
-                        // to compare this.podcastEpisode and it.playingEpisode.
-                        // Therefore, assign the property to a state variable.
                         currentlyPlayingEpisode = it.playingEpisode
                     }
+                    else -> Unit
                 }
             }
             .launchIn(viewModelScope)

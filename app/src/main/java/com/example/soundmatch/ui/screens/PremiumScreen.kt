@@ -3,6 +3,7 @@ package com.example.soundmatch.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material3.Button
@@ -23,6 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.soundmatch.domain.PremiumPlanInformation
 import com.example.soundmatch.domain.defaultPremiumPlans
+import com.example.soundmatch.ui.components.SoundMatchBottomNavigationConstants
+import com.example.soundmatch.ui.components.SoundMatchMiniPlayerConstants
 
 @Composable
 fun GetPremiumScreen(
@@ -46,7 +49,7 @@ fun GetPremiumScreen(
             Text(
                 text = "Pick your Premium",
                 fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.h6
+                style = MaterialTheme.typography.titleLarge
             )
         }
         items(availablePlans) {
@@ -108,14 +111,14 @@ private fun PlanInformationCard(
             Text(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.subtitle1,
+                style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
                 text = planHighlights
             )
             Button(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
                 shape = RoundedCornerShape(50),
-                colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White),
                 onClick = onViewPlansButtonClick
             ) {
                 Text(
@@ -126,12 +129,12 @@ private fun PlanInformationCard(
                     text = "VIEW PLANS",
                     fontWeight = FontWeight.Bold,
                     color = Color.Black,
-                    style = MaterialTheme.typography.subtitle1
+                    style = MaterialTheme.typography.titleMedium
                 )
             }
             Text(
                 text = card.termsAndConditions,
-                style = MaterialTheme.typography.overline,
+                style = MaterialTheme.typography.labelSmall,
                 textAlign = TextAlign.Center,
                 color = Color.White,
                 fontWeight = FontWeight.Normal
@@ -162,12 +165,12 @@ private fun PremiumCardHeader(
                 text = pricingInformation.cost,
                 textAlign = TextAlign.End,
                 fontWeight = FontWeight.Bold,
-                style = MaterialTheme.typography.h5
+                style = MaterialTheme.typography.headlineSmall
             )
             Text(
                 text = pricingInformation.term,
                 textAlign = TextAlign.End,
-                style = MaterialTheme.typography.overline
+                style = MaterialTheme.typography.labelSmall
             )
         }
     }

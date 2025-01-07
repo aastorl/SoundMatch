@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
@@ -31,9 +32,14 @@ import androidx.paging.compose.LazyPagingItems
 import com.example.soundmatch.domain.PodcastEpisode
 import com.example.soundmatch.domain.PodcastShow
 import com.example.soundmatch.domain.equalsIgnoringImageSize
+import com.example.soundmatch.ui.components.AsyncImageWithPlaceholder
+import com.example.soundmatch.ui.components.DefaultSoundMatchLoadingAnimation
+import com.example.soundmatch.ui.components.DetailScreenTopAppBar
+import com.example.soundmatch.ui.components.HtmlTextView
+import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.DynamicBackgroundResource
+import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.dynamicBackground
 import kotlinx.coroutines.launch
 
-@ExperimentalMaterialApi
 @Composable
 fun PodcastShowDetailScreen(
     podcastShow: PodcastShow,
@@ -83,7 +89,7 @@ fun PodcastShowDetailScreen(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     text = spannedHtmlDescription,
                     textAppearanceResId = com.google.android.material.R.style.TextAppearance_MaterialComponents_Subtitle2,
-                    color = Color.White.copy(alpha = ContentAlpha.medium),
+                    color = Color.White.copy(alpha = 0.6f),
                 )
             }
             item {
@@ -93,12 +99,13 @@ fun PodcastShowDetailScreen(
                     color = Color.White,
                     text = "Episodes",
                     fontWeight = FontWeight.SemiBold,
-                    style = MaterialTheme.typography.subtitle1
+                    style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(modifier = Modifier.size(8.dp))
             }
-            items(episodes) {
-                it?.let { episode ->
+            items(count = episodes.itemCount) { index ->
+                val episode = episodes[index]
+                episode?.let { episode ->
                     StreamableEpisodeCard(
                         episode = episode,
                         isEpisodePlaying = currentlyPlayingEpisode.equalsIgnoringImageSize(episode) && isCurrentlyPlayingEpisodePaused == false,
@@ -175,7 +182,7 @@ private fun Header(
         HeaderActionsRow(
             modifier = Modifier
                 .padding(horizontal = 16.dp)
-                .alpha(ContentAlpha.medium)
+                .alpha(0.6f)
         )
     }
 }
@@ -216,7 +223,7 @@ private fun PodcastHeaderImageWithMetadata(
             Text(
                 text = nameOfPublisher,
                 maxLines = 1,
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
                 color = Color.White
             )
         }
@@ -229,14 +236,14 @@ private fun HeaderActionsRow(modifier: Modifier = Modifier) {
         OutlinedButton(
             onClick = { },
             colors = ButtonDefaults.outlinedButtonColors(
-                backgroundColor = Color.Transparent,
+                containerColor = Color.Transparent,
                 contentColor = Color.White,
             ),
             border = BorderStroke(1.dp, Color.White)
         ) {
             Text(
                 text = "Follow",
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.SemiBold
             )
         }
