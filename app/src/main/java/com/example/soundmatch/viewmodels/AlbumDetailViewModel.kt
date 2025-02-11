@@ -31,6 +31,7 @@ class AlbumDetailViewModel @Inject constructor(
     getPlaybackLoadingStatusUseCase: GetPlaybackLoadingStatusUseCase,
     private val tracksRepository: TracksRepository,
 ) : AndroidViewModel(application) {
+
     private val _tracks = mutableStateOf<List<SearchResult.TrackSearchResult>>(emptyList())
     val tracks = _tracks as State<List<SearchResult.TrackSearchResult>>
 
@@ -39,7 +40,7 @@ class AlbumDetailViewModel @Inject constructor(
 
     private val albumId =
         savedStateHandle.get<String>(SoundMatchNavigationDestinations.AlbumDetailScreen.NAV_ARG_ALBUM_ID) !!
-    val currentlyPlayingTrack = getCurrentlyPlayingTrackUseCase.currentlyPlayingTrackStream
+    val currentlyPlayingTrackStream = getCurrentlyPlayingTrackUseCase.currentlyPlayingTrackStream
 
     init {
         fetchAndAssignTrackList()

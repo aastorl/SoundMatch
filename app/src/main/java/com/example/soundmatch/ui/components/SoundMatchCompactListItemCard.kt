@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.placeholder.PlaceholderHighlight
 import com.google.accompanist.placeholder.material.shimmer
 
+
 /**
  * An enum containing the all the types of list item cards.
  */
@@ -249,7 +250,8 @@ fun SoundMatchCompactListItemCard(
         onClick = onClick,
         trailingButtonIcon = when (cardType) {
             ListItemCardType.TRACK -> Icons.Filled.MoreVert
-            else -> ImageVector.vectorResource(id = R.drawable.ic_baseline_chevron_right_24)
+            else -> ImageVector.vectorResource(id = com.example.soundmatch.R
+                    .drawable.ic_baseline_chevron_right_24)
         },
         onTrailingButtonIconClick = onTrailingButtonIconClick,
         thumbnailShape = if (cardType == ListItemCardType.ARTIST) CircleShape else null,

@@ -163,7 +163,7 @@ private fun PodcastEpisodeScreenContent(
                 fontWeight = FontWeight.Bold,
             )
             Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_chevron_right_24),
+                imageVector = ImageVector.vectorResource(id = com.example.soundmatch.R.drawable.ic_baseline_chevron_right_24),
                 contentDescription = null
             )
         }
@@ -196,7 +196,7 @@ private fun PodcastEpisodeHeader(
             modifier = Modifier.offset(x = (-16).dp), onClick = onBackButtonClicked
         ) {
             Icon(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_chevron_left_24),
+                imageVector = ImageVector.vectorResource(id = com.example.soundmatch.R.drawable.ic_baseline_chevron_left_24),
                 contentDescription = null,
                 tint = Color.White
             )
@@ -280,14 +280,14 @@ fun ActionsRow(
             }
             IconButton(onClick = onAddButtonClicked) {
                 Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_baseline_add_circle_outline_24),
+                    imageVector = ImageVector.vectorResource(id = com.example.soundmatch.R.drawable.ic_baseline_add_circle_outline_24),
                     contentDescription = null,
                     tint = iconTintColor
                 )
             }
             IconButton(onClick = onDownloadButtonClicked) {
                 Icon(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_outline_download_for_offline_24),
+                    imageVector = ImageVector.vectorResource(id = com.example.soundmatch.R.drawable.ic_outline_download_for_offline_24),
                     contentDescription = null,
                     tint = iconTintColor
                 )

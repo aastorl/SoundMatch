@@ -30,6 +30,7 @@ import com.example.soundmatch.domain.Streamable
 import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.DynamicBackgroundResource
 import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.DynamicBackgroundStyle
 import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.dynamicBackground
+import com.example.soundmatch.R
 
 /**
  * An object that contains constants related to the [MusifyMiniPlayer]

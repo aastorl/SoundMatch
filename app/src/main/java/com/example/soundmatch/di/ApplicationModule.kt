@@ -3,6 +3,7 @@ package com.example.soundmatch.di
 import com.example.soundmatch.data.encoder.AndroidBase64Encoder
 import com.example.soundmatch.data.encoder.Base64Encoder
 import com.example.soundmatch.data.repositories.tokenrepository.SpotifyTokenRepository
+import com.example.soundmatch.data.repositories.tokenrepository.TokenRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -20,5 +21,5 @@ abstract class ApplicationModule {
     @Singleton
     abstract fun bindTokenRepository(
         spotifyTokenRepository: SpotifyTokenRepository
-    ) : SpotifyTokenRepository
+    ) : TokenRepository
 }

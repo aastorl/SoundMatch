@@ -5,9 +5,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
-
+    id("kotlin-kapt")
 }
 
 android {
@@ -41,25 +40,26 @@ android {
             )
         }
     }
+
     compileOptions {
-        // To enable the use of java.time api's with minSdk < 26
-        // coreLibraryDesugaringEnabled = true
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
+
     buildFeatures {
         compose = true
         buildConfig = true
     }
     composeOptions {
-        // kotlinCompilerExtensionVersion ("1.4.3")
+        composeOptions {
+            kotlinCompilerExtensionVersion
+        }
     }
-    packagingOptions {
+    packaging {
         resources {
            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/gradle/incremental.annotation.processors"
+            // Handles duplications files (from Hilt or other libraries)
         }
     }
     testOptions {
@@ -73,8 +73,6 @@ dependencies {
     // core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    // Java.time support for api < 26
-    coreLibraryDesugaring (libs.desugar.jdk.libs)
     // Compose
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
@@ -104,10 +102,9 @@ dependencies {
     implementation (libs.jackson.module.kotlin)
 
     // hilt
-    implementation (libs.hilt.android)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
     implementation (libs.androidx.hilt.navigation.compose)
-    implementation (libs.hilt.compiler)
-
 
     //exoplayer
     implementation (libs.google.exoplayer.core)
@@ -139,5 +136,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+}
 
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }

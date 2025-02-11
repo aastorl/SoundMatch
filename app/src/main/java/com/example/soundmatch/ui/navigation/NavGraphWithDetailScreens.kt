@@ -23,9 +23,6 @@ import com.example.soundmatch.domain.SearchResult
 import com.example.soundmatch.domain.Streamable
 import com.example.soundmatch.ui.components.DefaultSoundMatchErrorMessage
 import com.example.soundmatch.ui.components.DefaultSoundMatchLoadingAnimation
-import com.example.soundmatch.ui.navigation.SoundMatchNavigationDestinations.AlbumDetailScreen
-import com.example.soundmatch.ui.navigation.SoundMatchNavigationDestinations.ArtistDetailScreen
-import com.example.soundmatch.ui.navigation.SoundMatchNavigationDestinations.PodcastEpisodeDetailScreen
 import com.example.soundmatch.ui.screens.detailscreens.AlbumDetailScreen
 import com.example.soundmatch.ui.screens.detailscreens.ArtistDetailScreen
 import com.example.soundmatch.ui.screens.detailscreens.PlaylistDetailScreen
@@ -160,7 +157,7 @@ private fun NavGraphBuilder.artistDetailScreen(
             onTrackClicked = onPlayTrack,
             onAlbumClicked = onAlbumClicked,
             isLoading = uiState is ArtistDetailScreenUiState.Loading,
-            fallbackImageRes = R.drawable.ic_outline_account_circle_24,
+            fallbackImageRes = com.example.soundmatch.R.drawable.ic_outline_account_circle_24,
             isErrorMessageVisible = uiState is ArtistDetailScreenUiState.Error
         )
     }
@@ -231,7 +228,7 @@ private fun NavGraphBuilder.playlistDetailScreen(
             playlistImageUrlString = imageUrlString,
             nameOfPlaylistOwner = ownerName,
             totalNumberOfTracks = totalNumberOfTracks,
-            imageResToUseWhenImageUrlStringIsNull = R.drawable.ic_outline_account_circle_24,
+            imageResToUseWhenImageUrlStringIsNull = com.example.soundmatch.R.drawable.ic_outline_account_circle_24,
             tracks = tracks,
             currentlyPlayingTrack = currentlyPlayingTrack,
             onBackButtonClicked = onBackButtonClicked,

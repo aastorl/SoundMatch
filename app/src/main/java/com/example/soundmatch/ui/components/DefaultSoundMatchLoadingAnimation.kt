@@ -1,5 +1,6 @@
 package com.example.soundmatch.ui.components
 
+import com.example.soundmatch.R
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut

@@ -1,6 +1,6 @@
 [versions]
 accompanistPlaceholderMaterial = "0.13.0"
-agp = "8.7.3"
+agp = "8.8.0"
 androidxJunit = "1.2.1"
 androidxPagingCompose = "3.3.5"
 androidxPaletteKtx = "1.0.0"
@@ -9,9 +9,11 @@ converterJackson = "2.9.0"
 desugar_jdk_libs = "2.1.4"
 espressoCoreVersion = "3.6.1"
 exoplayerUiVersion = "2.19.1"
-hiltAndroid = "2.49"
-hiltCompiler = "2.44"
+hiltAndroid = "2.51.1"
+hiltAndroidCompiler = "2.51.1"
+hiltCompiler = "2.51.1"
 hiltNavigationCompose = "1.2.0"
+hiltNavigationComposeVersion = "1.2.0"
 jacksonModuleKotlin = "2.13.2"
 kotlin = "2.0.0"
 coreKtx = "1.15.0"
@@ -20,13 +22,13 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 kotlinxCoroutinesTest = "1.6.4"
 lifecycleRuntimeKtx = "2.8.7"
-activityCompose = "1.9.3"
-composeBom = "2024.12.01"
+activityCompose = "1.10.0"
+composeBom = "2025.01.01"
 lottieCompose = "6.1.0"
 material = "1.12.0"
 mockitoCore = "3.9.0"
 mockitoKotlin = "3.2.0"
-navigationCompose = "2.8.5"
+navigationCompose = "2.8.6"
 pagingCompose = "3.3.5"
 pagingRuntime = "3.3.5"
 robolectric = "4.8.1"
@@ -36,6 +38,7 @@ accompanist-placeholder-material = { module = "com.google.accompanist:accompanis
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-espresso-core-v361 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+androidx-hilt-navigation-compose-v100 = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationComposeVersion" }
 androidx-junit-v121 = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
 androidx-paging-compose-v320alpha01 = { module = "androidx.paging:paging-compose", version.ref = "pagingCompose" }
@@ -48,6 +51,7 @@ desugar_jdk_libs = { module = "com.android.tools:desugar_jdk_libs", version.ref 
 google-exoplayer-core = { module = "com.google.android.exoplayer:exoplayer-core", version.ref = "exoplayerUiVersion" }
 google-exoplayer-ui = { module = "com.google.android.exoplayer:exoplayer-ui", version.ref = "exoplayerUiVersion" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroidCompiler" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hiltCompiler" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltCompiler" }
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin", version.ref = "jacksonModuleKotlin" }

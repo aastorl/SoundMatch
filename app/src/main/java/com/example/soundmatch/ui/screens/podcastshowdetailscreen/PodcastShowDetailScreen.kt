@@ -39,6 +39,7 @@ import com.example.soundmatch.ui.components.HtmlTextView
 import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.DynamicBackgroundResource
 import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.dynamicBackground
 import kotlinx.coroutines.launch
+import com.example.soundmatch.R
 
 @Composable
 fun PodcastShowDetailScreen(

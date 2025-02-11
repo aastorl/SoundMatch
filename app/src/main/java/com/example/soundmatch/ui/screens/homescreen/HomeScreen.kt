@@ -28,6 +28,7 @@ import com.example.soundmatch.ui.components.HomeFeedCard
 import com.example.soundmatch.ui.components.SoundMatchBottomNavigationConstants
 import com.example.soundmatch.ui.components.SoundMatchFilterChip
 import com.example.soundmatch.ui.components.SoundMatchMiniPlayerConstants
+import com.example.soundmatch.R
 
 /**
  * A home screen composable that shows time-based greeting, home feed filters,

@@ -1,6 +1,7 @@
 package com.example.soundmatch.utils
 
 import android.content.Context
+import com.example.soundmatch.R
 
 /**
  * A utility function used to generate a string in the following format:

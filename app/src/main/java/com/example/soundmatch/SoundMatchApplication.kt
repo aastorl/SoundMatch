@@ -1,4 +1,4 @@
-package com.example.soundmatch.di
+package com.example.soundmatch
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.soundmatch.data.repositories.homefeedrepository.HomeFeedRepository
 import com.example.soundmatch.data.repositories.homefeedrepository.ISO6391LanguageCode
 import com.example.soundmatch.data.utils.FetchedResource
-import com.example.soundmatch.di.SoundMatchApplication
+import com.example.soundmatch.SoundMatchApplication
 import com.example.soundmatch.domain.*
 import com.example.soundmatch.viewmodels.getCountryCode
 import com.example.soundmatch.viewmodels.homefeedviewmodel.greetingphrasegenerator.GreetingPhraseGenerator

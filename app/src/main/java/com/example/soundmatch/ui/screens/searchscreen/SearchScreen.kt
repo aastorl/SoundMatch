@@ -46,6 +46,7 @@ import com.example.soundmatch.ui.components.SoundMatchFilterChip
 import com.example.soundmatch.ui.components.SoundMatchMiniPlayerConstants
 import com.example.soundmatch.viewmodels.searchviewmodel.SearchFilter
 import kotlinx.coroutines.launch
+import com.example.soundmatch.R
 
 /**
  * A data class that contains all the different paging items associated

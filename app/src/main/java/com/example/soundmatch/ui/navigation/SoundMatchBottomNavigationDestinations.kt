@@ -1,5 +1,7 @@
 package com.example.soundmatch.ui.navigation
 
+import com.example.soundmatch.R
+
 sealed class SoundMatchBottomNavigationDestinations(
     val route: String,
     val label: String,

@@ -1,5 +1,6 @@
 package com.example.soundmatch.ui.components
 
+import com.example.soundmatch.R
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*

@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.example.soundmatch.domain.PodcastEpisode
 import com.example.soundmatch.domain.getFormattedDateAndDurationString
 import com.example.soundmatch.ui.components.AsyncImageWithPlaceholder
+import com.example.soundmatch.R
 
 @Composable
 fun StreamableEpisodeCard(

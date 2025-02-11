@@ -2,6 +2,7 @@ package com.example.soundmatch.ui.screens.searchscreen
 
 import androidx.compose.ui.graphics.Color
 import com.example.soundmatch.domain.Genre
+import com.example.soundmatch.R
 
 /**
  * Used to get the associated image resource id of the [Genre.GenreType].

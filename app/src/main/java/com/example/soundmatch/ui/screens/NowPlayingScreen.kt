@@ -24,6 +24,7 @@ import com.example.soundmatch.ui.components.AsyncImageWithPlaceholder
 import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.DynamicBackgroundResource
 import com.example.soundmatch.ui.dynamicTheme.dynamicbackgroundmodifier.dynamicBackground
 import kotlinx.coroutines.flow.Flow
+import com.example.soundmatch.R
 
 // collecting the flow within the composable scopes the collector to the composable.
 // This ensures that the collection of flow is stopped as soon this composable
