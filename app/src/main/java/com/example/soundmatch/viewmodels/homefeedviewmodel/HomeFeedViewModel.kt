@@ -1,22 +1,33 @@
 package com.example.soundmatch.viewmodels.homefeedviewmodel
 
 import android.app.Application
+import android.content.Context
+import android.telephony.TelephonyManager
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.soundmatch.SoundMatchApplication
 import com.example.soundmatch.data.repositories.homefeedrepository.HomeFeedRepository
 import com.example.soundmatch.data.repositories.homefeedrepository.ISO6391LanguageCode
 import com.example.soundmatch.data.utils.FetchedResource
-import com.example.soundmatch.SoundMatchApplication
 import com.example.soundmatch.domain.*
-import com.example.soundmatch.viewmodels.getCountryCode
+import com.example.soundmatch.viewmodels.homefeedviewmodel.HomeFeedError.NetworkError
+import com.example.soundmatch.viewmodels.homefeedviewmodel.HomeFeedError.ParsingError
 import com.example.soundmatch.viewmodels.homefeedviewmodel.greetingphrasegenerator.GreetingPhraseGenerator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import java.util.Locale
 import javax.inject.Inject
+
+sealed class HomeFeedError {
+    object NetworkError : HomeFeedError()
+    object ParsingError : HomeFeedError()
+    object UnknownError : HomeFeedError()
+}
 
 @HiltViewModel
 class HomeFeedViewModel @Inject constructor(
@@ -24,6 +35,7 @@ class HomeFeedViewModel @Inject constructor(
     greetingPhraseGenerator: GreetingPhraseGenerator,
     private val homeFeedRepository: HomeFeedRepository,
 ) : AndroidViewModel(application) {
+
     private val _homeFeedCarousels = mutableStateOf<List<HomeFeedCarousel>>(emptyList())
     private val _uiState = mutableStateOf<HomeFeedUiState>(HomeFeedUiState.IDLE)
     val uiState = _uiState as State<HomeFeedUiState>
@@ -31,19 +43,23 @@ class HomeFeedViewModel @Inject constructor(
     val greetingPhrase = greetingPhraseGenerator.generatePhrase()
 
     init {
+        Log.d("HomeFeedViewModel", "ViewModel initialized")
         fetchAndAssignHomeFeedCarousels()
     }
 
     private fun fetchAndAssignHomeFeedCarousels() {
+        Log.d("HomeFeedViewModel", "fetchAndAssignHomeFeedCarousels called")
         viewModelScope.launch {
             _uiState.value = HomeFeedUiState.LOADING
+            Log.d("HomeFeedViewModel", "_uiState set to LOADING")
+
             val carousels = mutableListOf<HomeFeedCarousel>()
-            val languageCode =
-                getApplication<SoundMatchApplication>().resources.configuration.locale.language.let(::ISO6391LanguageCode)
-            val countryCode = getCountryCode()
-            val newAlbums = async {
-                homeFeedRepository.fetchNewlyReleasedAlbums(countryCode)
-            }
+            val languageCode = getApplication<SoundMatchApplication>().resources.configuration.locales[0].language.let(::ISO6391LanguageCode)
+            val countryCode = Locale.getDefault().country
+
+            Log.d("HomeFeedViewModel", "Fetching data for country: $countryCode and language: $languageCode")
+
+            val newAlbums = async { homeFeedRepository.fetchNewlyReleasedAlbums(countryCode) }
             val featuredPlaylists = async {
                 homeFeedRepository.fetchFeaturedPlaylistsForCurrentTimeStamp(
                     timestampMillis = System.currentTimeMillis(),
@@ -56,35 +72,25 @@ class HomeFeedViewModel @Inject constructor(
                     countryCode = countryCode, languageCode = languageCode
                 )
             }
+
             featuredPlaylists.awaitFetchedResourceUpdatingUiState {
-                it.playlists.map<SearchResult, HomeFeedCarouselCardInfo>(::toHomeFeedCarouselCardInfo)
-                    .let { homeFeedCarouselCardInfoList ->
-                        carousels.add(
-                            HomeFeedCarousel(
-                                id = "Featured Playlists",
-                                title = "Featured Playlists",
-                                associatedCards = homeFeedCarouselCardInfoList
-                            )
-                        )
-                    }
+                it.playlists.map(::toHomeFeedCarouselCardInfo).let { playlistCards ->
+                    carousels.add(HomeFeedCarousel("Featured Playlists", "Featured Playlists", playlistCards))
+                }
             }
+
             newAlbums.awaitFetchedResourceUpdatingUiState {
-                it.map<SearchResult, HomeFeedCarouselCardInfo>(::toHomeFeedCarouselCardInfo)
-                    .let { homeFeedCarouselCardInfoList ->
-                        carousels.add(
-                            HomeFeedCarousel(
-                                id = "Newly Released Albums",
-                                title = "Newly Released Albums",
-                                associatedCards = homeFeedCarouselCardInfoList
-                            )
-                        )
-                    }
+                it.map(::toHomeFeedCarouselCardInfo).let { albumCards ->
+                    carousels.add(HomeFeedCarousel("Newly Released Albums", "Newly Released Albums", albumCards))
+                }
             }
+
             categoricalPlaylists.awaitFetchedResourceUpdatingUiState {
-                it.map { playlistsForCategory -> playlistsForCategory.toHomeFeedCarousel() }
-                    .forEach(carousels::add)
+                it.map { category -> category.toHomeFeedCarousel() }.forEach(carousels::add)
             }
+
             _homeFeedCarousels.value = carousels
+            _uiState.value = HomeFeedUiState.IDLE
         }
     }
 
@@ -93,18 +99,36 @@ class HomeFeedViewModel @Inject constructor(
         viewModelScope.launch { fetchAndAssignHomeFeedCarousels() }
     }
 
-    /**
-     * A utility function that sets the appropriate [_uiState] based on
-     * the result of [Deferred.await]. It uses [awaitFetchedResource]
-     * under the hood. This utility function manages the [_uiState]
-     * on its own without requiring the caller to explicitly pass the
-     * "onError" and "onSuccess" callbacks to the [awaitFetchedResource].
-     * @see [awaitFetchedResource]
-     */
+    private fun logCountryCodes() {
+        val countryCode = Locale.getDefault().country
+        Log.d("CountryCode", "Country from Locale: $countryCode")
+
+        val simCountry = getSimCountryCode(getApplication<Application>())
+        Log.d("CountryCode", "Country from SIM: $simCountry")
+
+        val systemCountry = getSystemCountryCode(getApplication<Application>())
+        Log.d("CountryCode", "Country from System Settings: $systemCountry")
+    }
+
+    private fun getSimCountryCode(context: Context): String? {
+        val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+        return telephonyManager.simCountryIso
+    }
+
+    private fun getSystemCountryCode(context: Context): String {
+        return Locale.getDefault().country
+    }
+
     private suspend fun <FetchedResourceType> Deferred<FetchedResource<FetchedResourceType, SoundMatchErrorType>>.awaitFetchedResourceUpdatingUiState(
         onSuccess: (FetchedResourceType) -> Unit
     ) {
         awaitFetchedResource(onError = {
+            Log.e("HomeFeedViewModel", "Error fetching data: $it")
+            val homeFeedError = when (it) {
+                is NetworkError -> HomeFeedError.NetworkError
+                is ParsingError -> HomeFeedError.ParsingError
+                else -> HomeFeedError.UnknownError
+            }
             if (_uiState.value == HomeFeedUiState.ERROR) return@awaitFetchedResource
             _uiState.value = HomeFeedUiState.ERROR
         }, onSuccess = {
@@ -114,14 +138,6 @@ class HomeFeedViewModel @Inject constructor(
         })
     }
 
-    /**
-     * A method that will await the result of the deferred object and execute the
-     * [onSuccess] lambda if, and only if, the call to [Deferred.await] returned an instance
-     * of [FetchedResource.Success]. The [onSuccess] has a parameter that will provide
-     * the [FetchedResourceType], which represents the type of data that will be
-     * encapsulated within the [FetchedResource.Success] class. In other words,
-     * the [onSuccess]'s parameter will contain [FetchedResource.Success.data].
-     */
     private suspend fun <FetchedResourceType> Deferred<FetchedResource<FetchedResourceType, SoundMatchErrorType>>.awaitFetchedResource(
         onError: (SoundMatchErrorType) -> Unit, onSuccess: (FetchedResourceType) -> Unit
     ) {
@@ -130,34 +146,27 @@ class HomeFeedViewModel @Inject constructor(
             onError((fetchedResourceResult as FetchedResource.Failure).cause)
             return
         }
-
         onSuccess(fetchedResourceResult.data)
     }
 
     private fun toHomeFeedCarouselCardInfo(searchResult: SearchResult): HomeFeedCarouselCardInfo =
         when (searchResult) {
-            is SearchResult.AlbumSearchResult -> {
-                HomeFeedCarouselCardInfo (
-                    id = searchResult.id,
-                    imageUrlString = searchResult.albumArtUrlString,
-                    caption = searchResult.name,
-                    associatedSearchResult = searchResult
-                )
-            }
-            is SearchResult.PlaylistSearchResult -> {
-                HomeFeedCarouselCardInfo(
-                    id = searchResult.id,
-                    imageUrlString = searchResult.imageUrlString ?: "",
-                    caption = searchResult.name,
-                    associatedSearchResult = searchResult
-                )
-            }
-            else -> throw java.lang.IllegalArgumentException("The method supports only the mapping of AlbumSearchResult and PlaylistSearchResult subclasses")
+            is SearchResult.AlbumSearchResult -> HomeFeedCarouselCardInfo(
+                id = searchResult.id,
+                imageUrlString = searchResult.albumArtUrlString,
+                caption = searchResult.name,
+                associatedSearchResult = searchResult
+            )
+            is SearchResult.PlaylistSearchResult -> HomeFeedCarouselCardInfo(
+                id = searchResult.id,
+                imageUrlString = searchResult.imageUrlString ?: "",
+                caption = searchResult.name,
+                associatedSearchResult = searchResult
+            )
+            else -> throw IllegalArgumentException("Unsupported SearchResult type: ${searchResult::class.java}")
         }
 
-    /**
-     * An enum class that contains the different UI states associated
-     * with a screen that displays the home feed.
-     */
     enum class HomeFeedUiState { IDLE, LOADING, ERROR }
 }
+
+
