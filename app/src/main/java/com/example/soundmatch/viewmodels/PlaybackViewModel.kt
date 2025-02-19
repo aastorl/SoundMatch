@@ -1,6 +1,7 @@
 package com.example.soundmatch.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.graphics.drawable.toBitmap
@@ -77,8 +78,10 @@ class PlaybackViewModel @Inject constructor(
     }
 
     fun playStreamable(streamable: Streamable) {
+        Log.d("PlaybackViewModel", "Attempting to play: ${streamable.streamInfo.title}, URL: ${streamable.streamInfo.streamUrl}")
         viewModelScope.launch {
             if (streamable.streamInfo.streamUrl == null) {
+                Log.e("PlaybackViewModel", "Error: Stream URL is null")
                 val streamableType = when (streamable) {
                     is PodcastEpisode -> "podcast episode"
                     is SearchResult.TrackSearchResult -> "track"
