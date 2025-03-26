@@ -1,10 +1,10 @@
 # SoundMatch - Music Explorer (Incomplete Project)
 
-**SoundMatch** is an Android application developed with the intention of exploring and discovering music, inspired by the popular platform Spotify. This project was built with a focus on **Android development best practices** and the utilization of **modern technologies**, aiming to deliver a fluid and intuitive user experience.
+**SoundMatch** is an Android application developed with the intention of the use for an Automatic EQ, inspired by the popular platform Spotify. This project was built with a focus on **Android development best practices** and the utilization of **modern technologies**, aiming to deliver a fluid and intuitive user experience.
 
 **Project Status:**
 
-This project is **incomplete**. While significant effort was dedicated to its development and various functionalities were implemented, **music playback is not fully operational** due to **recent restrictions and changes in the Spotify API**. Despite this limitation, SoundMatch represents a comprehensive exercise in applying cutting-edge architectures and technologies in Android development.
+This project is **incomplete**. While significant effort was dedicated to its development and various functionalities were implemented, **music playback is not fully operational** due to **recent restrictions and changes in the Spotify API** (thanks Spotify btw). Despite this limitation, SoundMatch represents a comprehensive exercise in applying cutting-edge architectures and technologies in Android development.
 
 ## Key Technologies Used:
 
@@ -51,8 +51,6 @@ Despite the limitations in playback, this project offers an excellent opportunit
 
 ## Screenshots (Coming Soon):
 
-Screenshots will be included to showcase the user interface and different sections of the application.
-
 ## Next Steps (Considerations):
 
 If this project were to be continued, the following alternatives could be considered:
@@ -62,4 +60,4 @@ If this project were to be continued, the following alternatives could be consid
 
 ## Conclusion:
 
-SoundMatch, although incomplete in its playback functionality, represents a significant effort in applying modern architectures and technologies in Android development. This project demonstrates **strong dedication, the ability to face technical challenges, and the exploration of creative solutions** in the face of limitations imposed by external services. Despite its current limitations, I hope it serves as **solid evidence of my skills and my commitment to developing quality Android applications.**
+SoundMatch, although incomplete in its playback functionality, represents a significant effort in applying modern architectures and technologies in Android development. This project demonstrates **my strong dedication, the ability to face technical challenges, and the exploration of creative solutions** in the face of limitations imposed by external services. Despite its current limitations, I hope it serves as **solid evidence of my skills and my commitment to developing quality Android applications.**
