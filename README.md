@@ -1,63 +1,78 @@
-# SoundMatch - Music Explorer (Incomplete Project)
+# 🎧 SoundMatch - Music Explorer (Incomplete Project)
 
-**SoundMatch** is an Android application developed with the intention of the use for an Automatic EQ, inspired by the popular platform Spotify. This project was built with a focus on **Android development best practices** and the utilization of **modern technologies**, aiming to deliver a fluid and intuitive user experience.
+**SoundMatch** is an Android application developed with the goal of implementing **automatic equalization by genre**, inspired by Spotify. It focuses on modern Android development practices and aims to provide a clean, fluid, and intuitive user experience.
 
-**Project Status:**
+---
 
-This project is **incomplete**. While significant effort was dedicated to its development and various functionalities were implemented, **music playback is not fully operational** due to **recent restrictions and changes in the Spotify API** (thanks Spotify btw). Despite this limitation, SoundMatch represents a comprehensive exercise in applying cutting-edge architectures and technologies in Android development.
+## 🚧 Project Status: Incomplete
 
-## Key Technologies Used:
+While many features have been implemented, **music playback is not fully operational** due to recent Spotify API restrictions (thanks Spotify btw 😅). Despite this, the project is a strong exercise in architecture, UI design, and problem-solving using current tools and libraries.
 
-* **Architecture:** Model-View-ViewModel (MVVM) for clear separation of concerns and improved testability.
-* **Dependency Injection:** Hilt for efficient and straightforward management of dependencies throughout the application.
-* **User Interface:** Jetpack Compose, the modern declarative UI toolkit from Android, to create attractive and reactive user interfaces.
-* **Navigation:** Compose Navigation for fluid and declarative management of the navigation flow within the application.
-* **Networking:** Retrofit for performing efficient and secure HTTP calls to the Spotify API.
-* **Audio Playback:** ExoPlayer library was integrated as the foundation for audio playback functionality (currently limited by API restrictions).
-* **Pagination:** Paging 3 to load and display large datasets efficiently, improving performance and user experience when exploring search results and extensive lists.
+---
 
-## Dedication and Challenges Overcome:
+## 🛠️ Key Technologies Used
 
-The development of SoundMatch was a process of deep learning and dedication. Considerable time was invested in understanding and implementing the various technologies mentioned. Despite the challenges encountered, significant progress was made in the application's structure and interface.
+- **Architecture**: MVVM for separation of concerns and better testability
+- **Dependency Injection**: Hilt
+- **UI**: Jetpack Compose
+- **Navigation**: Compose Navigation
+- **Networking**: Retrofit
+- **Audio Playback**: ExoPlayer (limited by API restrictions)
+- **Pagination**: Paging 3 for efficient data loading
 
-### Overcoming Spotify API Restrictions:
+---
 
-A major obstacle encountered during development was the **implementation of playback functionality due to recent restrictions imposed by the Spotify API**. These limitations affected the availability of certain resources necessary for direct playback without an active Spotify Premium account and the closure of some previously available features.
+## 🔍 Development Process & Challenges
 
-### The Attempt with CSV for Preview URLs:
+### 🎯 Deep Learning & Dedication
+This project was a personal deep dive into Android architecture, modern UI, and Spotify API integration. Countless hours went into learning and building.
 
-Aware of the limitations in directly obtaining `preview_url` from the API for all users, an alternative solution was explored: **the integration of a local CSV file containing song metadata, including preview URLs.**
+### 🔐 Spotify API Limitations
+Playback is limited due to:
+- Restrictions on `preview_url` availability.
+- Requirement of a **Spotify Premium account** for full playback access.
+- Deprecation of certain previously available endpoints.
 
-**CSV Creation and Implementation Process:**
+### 🧪 CSV Preview URL Workaround
+To overcome these limitations, I experimented with a workaround:
+- ✅ A **300MB CSV** dataset of songs was used.
+- 🛠️ A **PowerShell script** enriched the dataset with `preview_url`s.
+- 🔎 Custom logic in the `SearchViewModel` and `CsvUtils` handled song lookups.
 
-1.  **Obtaining a Massive Dataset:** Work was done with a dataset of approximately **300MB of song data** in CSV format.
-2.  **Enrichment with Preview URLs (via PowerShell):** A **PowerShell** script was developed to attempt to enrich this dataset with the corresponding `preview_url`s. This process involved the manipulation and processing of a large amount of data to associate preview URLs with the songs existing in the CSV.
-3.  **Implementation in the Application:** Logic was implemented in the `SearchViewModel` and utilities (`CsvUtils`) to read this CSV file and look up `preview_url`s based on the song ID obtained from the Spotify API. This attempt aimed to provide preview functionality even with the API restrictions.
+This solution partially worked but proved hard to maintain due to the scale and dynamic nature of the data.
 
-While this solution allowed progress in the desired direction, the **maintenance and accuracy of such a large and dynamic dataset presented significant challenges.**
+### ⚠️ Authentication Issues
+OAuth 2.0 was partially implemented, but performance issues and Spotify's Premium-only access policies made this feature impractical.
 
-### Challenges with Spotify Authentication:
+---
 
-An attempt was made to implement the **Spotify authentication flow (OAuth 2.0)** to allow users to connect their accounts. However, **serious performance issues** were encountered during this process. Furthermore, Spotify API policies imply that **only users with an active Spotify Premium account can use certain functionalities**, which would significantly limit the user base of SoundMatch. Due to these challenges and limitations, the complete implementation of authentication was not finalized.
+## 🔬 What This Project Shows
 
-Despite the limitations in playback, this project offers an excellent opportunity to review and evaluate the following areas:
+- Well-structured architecture and modular design.
+- Use of **Jetpack Compose** for reactive UIs.
+- Integration of **Spotify’s API** for metadata (artists, albums, tracks).
+- Implementation of **pagination** for large search result sets.
+- Creative thinking when facing external limitations.
 
-* The overall **structure of the application** and how the MVVM pattern is applied.
-* The **implementation of dependency injection** with Hilt.
-* The use of **Jetpack Compose** to build the user interface and navigation.
-* The **integration with the Spotify API** for searching and obtaining metadata (artists, albums, tracks, etc.).
-* The **implementation of pagination** to handle large lists of results efficiently.
-* The **attempt to integrate a CSV file** as a supplementary data source.
+---
 
-## Screenshots (Coming Soon):
+## 🖼️ Screenshots
+*Coming soon...*
 
-## Next Steps (Considerations):
+---
 
-If this project were to be continued, the following alternatives could be considered:
+## 🔮 Next Steps (If Continued)
 
-* **Integration with a different music API** that offers more flexibility in playback for developers.
-* **Focusing on the discovery and exploration features** of music, leaving aside direct playback.
+- Consider alternative music APIs with fewer playback limitations.
+- Focus on discovery, playlists, or genre-based recommendations instead of direct playback.
+- Explore Firebase or Supabase for user accounts and cloud-hosted metadata.
 
-## Conclusion:
+---
 
-SoundMatch, although incomplete in its playback functionality, represents a significant effort in applying modern architectures and technologies in Android development. This project demonstrates **my strong dedication, the ability to face technical challenges, and the exploration of creative solutions** in the face of limitations imposed by external services. Despite its current limitations, I hope it serves as **solid evidence of my skills and my commitment to developing quality Android applications.**
+## ✅ Why Feature an Incomplete Project?
+
+Even without full playback, **SoundMatch is a testament to my skills**, problem-solving, and persistence when facing limitations out of my control. I’m proud of what I built and what I learned—and I hope it reflects my passion for mobile development.
+
+---
+
+Thanks for checking it out! 🙌
