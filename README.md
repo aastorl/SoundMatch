@@ -6,7 +6,7 @@
 
 ## 🚧 Project Status: Incomplete
 
-While many features have been implemented, **music playback is not fully operational** due to recent Spotify API restrictions (thanks Spotify btw 😅). Despite this, the project is a strong exercise in architecture, UI design, and problem-solving using current tools and libraries.
+While many features have been implemented, **music playback is not fully operational** due to recent Spotify API restrictions (thanks Spotify btw). Despite this, the project is a strong exercise in architecture, UI design, and problem-solving using current tools and libraries.
 
 ---
 
